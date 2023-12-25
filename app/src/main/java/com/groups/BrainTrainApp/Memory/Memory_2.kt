@@ -57,12 +57,16 @@ class Memory_2 : AppCompatActivity() {
         }
         playercount++
         if(playercount == count){
-            nextLv();
+            playercount = 0
+            count++
+            nextLv()
         }
 
     }
     private fun nextLv() {
-
+        for (i in 0 until count){
+            buttonList.get(i).isChoose = true
+        }
     }
     private fun drawButtons() {
         totalLayout.removeAllViews()

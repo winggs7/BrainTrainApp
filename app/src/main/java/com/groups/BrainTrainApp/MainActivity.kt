@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.groups.BrainTrainApp.Adapter.GameAdapter
 import com.groups.BrainTrainApp.Memory.GameTest
+import com.groups.BrainTrainApp.Memory.Memory_1
 import com.groups.BrainTrainApp.Model.Game
 
 class MainActivity : AppCompatActivity() {
@@ -59,13 +60,13 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(position: Int, model: Game) {
                 // TODO: Handle Intent to redirect
                 Log.i("GameItem", model.name)
-                handleRedirect(this, GameTest::class.java)
+                handleRedirect(this, Memory_1::class.java)
             }
         })
     }
 
-    private fun handleRedirect(onClickListener: GameAdapter.OnClickListener, java: Class<GameTest>): Intent? {
-        startActivity(Intent(this, GameTest::class.java))
+    private fun handleRedirect(onClickListener: GameAdapter.OnClickListener, java: Class<Memory_1>): Intent? {
+        startActivity(Intent(this, Memory_1::class.java))
         return null
     }
 }

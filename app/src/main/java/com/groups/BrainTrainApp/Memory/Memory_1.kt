@@ -1,6 +1,8 @@
 package com.groups.BrainTrainApp.Memory
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -49,6 +51,11 @@ class Memory_1 : AppCompatActivity() {
             Log.d("lose","u lose")
         }
         clickedButton.isChoose = true
+        val border = GradientDrawable()
+        border.setColor(Color.LTGRAY)
+        border.setStroke(10, Color.BLUE)
+        border.cornerRadius = 8f
+        clickedButton.background = border
         addButton()
     }
 
