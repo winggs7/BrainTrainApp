@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
@@ -15,6 +17,7 @@ class Memory_1 : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<MyButton> = mutableListOf()
     lateinit var btnBack: Button
+    private var handler: Handler = Handler(Looper.getMainLooper())
     var count = 3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +59,12 @@ class Memory_1 : AppCompatActivity() {
         border.setStroke(10, Color.BLUE)
         border.cornerRadius = 8f
         clickedButton.background = border
-        addButton()
+        handler.postDelayed({
+            border.setStroke(10, Color.WHITE)
+            border.cornerRadius = 0f
+            clickedButton.background = border
+            addButton()
+        }, 3000)
     }
 
     private fun drawButtons() {
