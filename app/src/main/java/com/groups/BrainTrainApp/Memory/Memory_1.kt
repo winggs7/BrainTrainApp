@@ -1,16 +1,15 @@
 package com.groups.BrainTrainApp.Memory
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
-
-class GameTest : AppCompatActivity() {
+class Memory_1 : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<MyButton> = mutableListOf()
     lateinit var btnBack: Button

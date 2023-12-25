@@ -1,20 +1,20 @@
 package com.groups.BrainTrainApp.Memory
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
-
-class GameTest : AppCompatActivity() {
+class Memory_2 : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<MyButton> = mutableListOf()
     lateinit var btnBack: Button
-    var count = 3
+    var count = 2
+    var playercount = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.memory_game_1)
@@ -24,6 +24,9 @@ class GameTest : AppCompatActivity() {
         }
 
         totalLayout = findViewById(R.id.totalLayout)
+        addButton()
+        addButton()
+        addButton()
         addButton()
         addButton()
         addButton()
@@ -47,12 +50,20 @@ class GameTest : AppCompatActivity() {
     }
     private fun chosenButton(clickedButton: MyButton){
         if(clickedButton.isChoose){
+            clickedButton.isChoose = false
+        }
+        else{
             Log.d("lose","u lose")
         }
-        clickedButton.isChoose = true
-        addButton()
-    }
+        playercount++
+        if(playercount == count){
+            nextLv();
+        }
 
+    }
+    private fun nextLv() {
+
+    }
     private fun drawButtons() {
         totalLayout.removeAllViews()
 
