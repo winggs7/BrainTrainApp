@@ -37,7 +37,7 @@ class GameTest : AppCompatActivity() {
 
     private fun addButton() {
         val newButton = MyButton(this)
-        newButton.text = "${buttonList.size}"
+       // newButton.text = "${buttonList.size}"
         newButton.setOnClickListener {
             chosenButton(newButton)
         }

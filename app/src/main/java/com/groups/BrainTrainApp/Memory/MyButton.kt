@@ -3,8 +3,9 @@ package com.groups.BrainTrainApp.Memory
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatImageButton
 
-class MyButton : AppCompatButton {
+class MyButton : AppCompatImageButton {
     var isChoose: Boolean = false
 
     constructor(context: Context) : super(context) {

@@ -40,7 +40,7 @@ class Memory_2 : AppCompatActivity() {
 
     private fun addButton() {
         val newButton = MyButton(this)
-        newButton.text = "${buttonList.size}"
+       // newButton.text = "${buttonList.size}"
         newButton.setOnClickListener {
             chosenButton(newButton)
         }

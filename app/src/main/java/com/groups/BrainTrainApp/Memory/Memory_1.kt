@@ -1,21 +1,27 @@
 package com.groups.BrainTrainApp.Memory
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
+import java.util.Locale
+
 class Memory_1 : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<MyButton> = mutableListOf()
+    private val imageNames: MutableList<String> = mutableListOf()
     lateinit var btnBack: Button
     private var handler: Handler = Handler(Looper.getMainLooper())
     var count = 3
@@ -26,11 +32,31 @@ class Memory_1 : AppCompatActivity() {
         btnBack.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
         }
-
+        createListImage()
         totalLayout = findViewById(R.id.totalLayout)
         addButton()
         addButton()
         addButton()
+    }
+
+    private fun createListImage(){
+        for (i in 1 until 10){
+            imageNames.add("m$i")
+        }
+    }
+    fun getRandomImageName(): String {
+
+        val randomIndex = (0 until imageNames.size).random()
+
+        return imageNames.removeAt(randomIndex)
+    }
+    fun loadImageIntoButton(targetButton: MyButton) {
+        var a = getResourceId(this,getRandomImageName())
+        targetButton.setBackgroundResource(a)
+    }
+    fun getResourceId(context: Context, name: String): Int {
+        var name = name.lowercase(Locale.getDefault())
+        return context.resources.getIdentifier(name, "drawable", context.packageName)
     }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -41,7 +67,8 @@ class Memory_1 : AppCompatActivity() {
 
     private fun addButton() {
         val newButton = MyButton(this)
-        newButton.text = "${buttonList.size}"
+      //  newButton.text = "${buttonList.size}"
+        loadImageIntoButton(newButton)
         newButton.setOnClickListener {
             chosenButton(newButton)
         }
@@ -54,15 +81,17 @@ class Memory_1 : AppCompatActivity() {
             Log.d("lose","u lose")
         }
         clickedButton.isChoose = true
+        val existingBackground = clickedButton.background
         val border = GradientDrawable()
-        border.setColor(Color.LTGRAY)
+        //border.setColor(Color.LTGRAY)
         border.setStroke(10, Color.BLUE)
+        val layers = arrayOf(existingBackground, border)
+        val layerDrawable = LayerDrawable(layers)
         border.cornerRadius = 8f
-        clickedButton.background = border
+        clickedButton.background = layerDrawable
+
         handler.postDelayed({
-            border.setStroke(10, Color.WHITE)
-            border.cornerRadius = 0f
-            clickedButton.background = border
+            clickedButton.background = existingBackground
             addButton()
         }, 3000)
     }
