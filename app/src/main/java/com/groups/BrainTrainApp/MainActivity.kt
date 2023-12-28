@@ -1,15 +1,17 @@
 package com.groups.BrainTrainApp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.groups.BrainTrainApp.Adapter.GameAdapter
+import com.groups.BrainTrainApp.Attention.FindDifferences.FindDifferences
 import com.groups.BrainTrainApp.Memory.GameTest
 import com.groups.BrainTrainApp.Model.Game
+
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gameRecyclerView: RecyclerView
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         btnRedirect = findViewById<Button>(R.id.btnredirect)
         btnRedirect.setOnClickListener {
-            startActivity(Intent(this, GameTest::class.java))
+            startActivity(Intent(this, FindDifferences::class.java))
         }
     }
 
