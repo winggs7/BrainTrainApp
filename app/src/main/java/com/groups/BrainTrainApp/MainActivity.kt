@@ -1,18 +1,15 @@
 package com.groups.BrainTrainApp
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.groups.BrainTrainApp.Adapter.GameAdapter
-import com.groups.BrainTrainApp.Components.Attention.FindDifferences.FindDifferences
 import com.groups.BrainTrainApp.Components.Attention.FindPairs.FindPairs
-import com.groups.BrainTrainApp.Memory.GameTest
 import com.groups.BrainTrainApp.Model.Game
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var gameRecyclerView: RecyclerView
