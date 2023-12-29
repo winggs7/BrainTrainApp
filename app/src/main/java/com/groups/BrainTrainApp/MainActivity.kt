@@ -8,7 +8,7 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.groups.BrainTrainApp.Adapter.GameAdapter
-import com.groups.BrainTrainApp.Memory.GameTest
+import com.groups.BrainTrainApp.Components.Attention.FindPairs.FindPairs
 import com.groups.BrainTrainApp.Model.Game
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
 
         btnRedirect = findViewById<Button>(R.id.btnredirect)
         btnRedirect.setOnClickListener {
-            startActivity(Intent(this, GameTest::class.java))
+            startActivity(Intent(this, FindPairs::class.java))
         }
     }
 
@@ -59,13 +59,13 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(position: Int, model: Game) {
                 // TODO: Handle Intent to redirect
                 Log.i("GameItem", model.name)
-                handleRedirect(this, GameTest::class.java)
+                handleRedirect(this, FindPairs::class.java)
             }
         })
     }
 
-    private fun handleRedirect(onClickListener: GameAdapter.OnClickListener, java: Class<GameTest>): Intent? {
-        startActivity(Intent(this, GameTest::class.java))
+    private fun handleRedirect(onClickListener: GameAdapter.OnClickListener, java: Class<*>): Intent? {
+        startActivity(Intent(this, java))
         return null
     }
 }
