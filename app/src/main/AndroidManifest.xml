@@ -16,7 +16,10 @@
         android:theme="@style/Theme.BrainTrainApp"
         tools:targetApi="31">
         <activity
-            android:name=".Attention.FindDifferences.FindDifferences"
+            android:name=".Components.Attention.FindPairs.FindPairs"
+            android:exported="false" />
+        <activity
+            android:name=".Components.Attention.FindDifferences.FindDifferences"
             android:exported="false" />
         <activity
             android:name=".MotionLayout.CarouselActivity"

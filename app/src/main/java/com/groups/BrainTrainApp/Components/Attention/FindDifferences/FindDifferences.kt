@@ -1,4 +1,4 @@
-package com.groups.BrainTrainApp.Attention.FindDifferences
+package com.groups.BrainTrainApp.Components.Attention.FindDifferences
 
 import android.content.Context
 import android.content.Intent
@@ -37,7 +37,7 @@ class FindDifferences : AppCompatActivity() {
         btnFindDifferences = findViewById<ImageButton>(R.id.btn_find_difference)
         btnFindDifferences.setOnClickListener{
             btnFindDifferences.setBackgroundResource(R.drawable.border)
-            score+=SCORE_INCREASE
+            score+= SCORE_INCREASE
             scoreText.text = "Score: $score"
 
             Handler(Looper.getMainLooper()).postDelayed({

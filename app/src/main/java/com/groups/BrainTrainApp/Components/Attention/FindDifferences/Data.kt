@@ -1,4 +1,4 @@
-package com.groups.BrainTrainApp.Attention.FindDifferences
+package com.groups.BrainTrainApp.Components.Attention.FindDifferences
 
 import com.groups.BrainTrainApp.R
 
