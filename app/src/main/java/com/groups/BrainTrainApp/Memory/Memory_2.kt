@@ -7,11 +7,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 class Memory_2 : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
-    private val buttonList: MutableList<MyButton> = mutableListOf()
+    private val buttonList: MutableList<ButtonCustom> = mutableListOf()
     lateinit var btnBack: Button
     var count = 2
     var playercount = 0
@@ -39,7 +40,7 @@ class Memory_2 : AppCompatActivity() {
     }
 
     private fun addButton() {
-        val newButton = MyButton(this)
+        val newButton = ButtonCustom(this)
        // newButton.text = "${buttonList.size}"
         newButton.setOnClickListener {
             chosenButton(newButton)
@@ -48,7 +49,7 @@ class Memory_2 : AppCompatActivity() {
         buttonList.shuffle()
         drawButtons()
     }
-    private fun chosenButton(clickedButton: MyButton){
+    private fun chosenButton(clickedButton: ButtonCustom){
         if(clickedButton.isChoose){
             clickedButton.isChoose = false
         }

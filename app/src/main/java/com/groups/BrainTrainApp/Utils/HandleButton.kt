@@ -20,7 +20,7 @@ fun drawButton(context: Context, totalLayout: LinearLayout, buttonList: MutableL
     for (i in buttonList.indices) {
         val button = buttonList[i]
 
-        button.layoutParams = ViewGroup.LayoutParams(a / count, a / count)
+        button.layoutParams = ViewGroup.LayoutParams((a / count)*90/100, (a / count)*90/100)
         if (button.isChoose) {
             //TODO draw border for chosen item
             button.setImageResource(R.drawable.border_square)

@@ -2,12 +2,16 @@ package com.groups.BrainTrainApp.Components.Common
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageButton
 
 class ButtonCustom : AppCompatImageButton {
     var isChoose: Boolean = false
     var backgroundResourceId: Int? = null
-
+    var marginStart: Int = 10
+    var marginTop: Int = 10
+    var marginEnd: Int = 10
+    var marginBottom: Int = 10
     constructor(context: Context) : super(context) {
 
         init()
@@ -25,5 +29,13 @@ class ButtonCustom : AppCompatImageButton {
 
     private fun init() {
 
+    }
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+
+        val layoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
+        layoutParams.setMargins(marginStart, marginTop, marginEnd, marginBottom)
+        this.layoutParams = layoutParams
+        this.requestLayout()
     }
 }

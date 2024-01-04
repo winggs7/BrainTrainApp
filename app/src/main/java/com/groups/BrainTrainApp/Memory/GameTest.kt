@@ -7,12 +7,13 @@ import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
+import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 
 class GameTest : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
-    private val buttonList: MutableList<MyButton> = mutableListOf()
+    private val buttonList: MutableList<ButtonCustom> = mutableListOf()
     lateinit var btnBack: Button
     var count = 3
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class GameTest : AppCompatActivity() {
     }
 
     private fun addButton() {
-        val newButton = MyButton(this)
+        val newButton = ButtonCustom(this)
        // newButton.text = "${buttonList.size}"
         newButton.setOnClickListener {
             chosenButton(newButton)
@@ -45,7 +46,7 @@ class GameTest : AppCompatActivity() {
         buttonList.shuffle()
         drawButtons()
     }
-    private fun chosenButton(clickedButton: MyButton){
+    private fun chosenButton(clickedButton: ButtonCustom){
         if(clickedButton.isChoose){
             Log.d("lose","u lose")
         }
