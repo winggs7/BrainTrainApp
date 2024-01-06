@@ -1,6 +1,7 @@
 package com.groups.BrainTrainApp.Utils
 
 import android.content.Context
+import android.graphics.Color
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
@@ -21,12 +22,6 @@ fun drawButton(context: Context, totalLayout: LinearLayout, buttonList: MutableL
         val button = buttonList[i]
 
         button.layoutParams = ViewGroup.LayoutParams((a / count)*90/100, (a / count)*90/100)
-        if (button.isChoose) {
-            //TODO draw border for chosen item
-            button.setImageResource(R.drawable.border_square)
-        } else {
-            button.setImageResource(R.drawable.border_none)
-        }
         if (button.parent != null) {
             (button.parent as? ViewGroup)?.removeView(button)
         }

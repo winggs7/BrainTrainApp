@@ -1,6 +1,7 @@
 package com.groups.BrainTrainApp.Memory
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -10,17 +11,21 @@ import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
+import com.groups.BrainTrainApp.Utils.drawButton
+
 class Memory_2 : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<ButtonCustom> = mutableListOf()
     lateinit var btnBack: Button
     var count = 2
+    var numCol = 2
     var playercount = 0
+    var lvFlag: Boolean = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.memory_game_1)
         btnBack = findViewById<Button>(R.id.btnback)
-        btnBack.setOnClickListener{
+        btnBack.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
 
@@ -29,78 +34,66 @@ class Memory_2 : AppCompatActivity() {
         addButton()
         addButton()
         addButton()
-        addButton()
-        addButton()
+
+        nextLv()
     }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
-            drawButtons()
+            drawButton(this, totalLayout, buttonList, numCol)
         }
     }
 
     private fun addButton() {
         val newButton = ButtonCustom(this)
-       // newButton.text = "${buttonList.size}"
         newButton.setOnClickListener {
             chosenButton(newButton)
         }
-        buttonList.add(newButton)
+        newButton.setBackgroundColor(Color.WHITE)
         buttonList.shuffle()
-        drawButtons()
+        buttonList.add(newButton)
+        drawButton(this, totalLayout, buttonList, numCol)
     }
-    private fun chosenButton(clickedButton: ButtonCustom){
-        if(clickedButton.isChoose){
+
+    private fun chosenButton(clickedButton: ButtonCustom) {
+        if (clickedButton.isChoose) {
             clickedButton.isChoose = false
-        }
-        else{
-            Log.d("lose","u lose")
-        }
-        playercount++
-        if(playercount == count){
-            playercount = 0
-            count++
-            nextLv()
+            clickedButton.setBackgroundColor(Color.BLUE)
+            playercount++
+            if (playercount == count) {
+                playercount = 0
+                count++
+                clearColor()
+                nextLv()
+            }
+        } else {
+            clickedButton.setBackgroundColor(Color.RED)
+            Log.d("lose", "u lose")
         }
 
     }
+
+    private fun clearColor() {
+        for (i in buttonList.indices) {
+            val button = buttonList[i]
+            button.setBackgroundColor(Color.WHITE)
+        }
+    }
+
     private fun nextLv() {
-        for (i in 0 until count){
+        for (i in 0 until count) {
             buttonList.get(i).isChoose = true
         }
-    }
-    private fun drawButtons() {
-        totalLayout.removeAllViews()
-
-        var currentRow: LinearLayout? = null
-        val a = totalLayout.width
-
-//        if(totalLayout.height <= (totalLayout.width/count+50) *  ceil((buttonList.size/count).toFloat())){
-//            count ++
-//        }
-        if(buttonList.size == (count)*(count+1)){
-            count ++
-        }
-        for (i in buttonList.indices) {
-
-            val button = buttonList[i]
-
-            button.layoutParams = ViewGroup.LayoutParams(a/count, a/count)
-            if (button.parent != null) {
-                (button.parent as? ViewGroup)?.removeView(button)
-            }
-
-
-            if (i % count == 0) {
-                currentRow = LinearLayout(this)
-                currentRow.orientation = LinearLayout.HORIZONTAL
-                currentRow.setHorizontalGravity(1)
-                totalLayout.addView(currentRow)
-            }
-            currentRow?.addView(button)
+        if (!lvFlag) {
+            lvFlag = true
+            numCol++
+        } else {
+            lvFlag = false
 
         }
-        totalLayout.requestLayout()
-
+        for (i in 0 until count) {
+            addButton()
+        }
     }
 }

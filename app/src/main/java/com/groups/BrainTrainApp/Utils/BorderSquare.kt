@@ -1,19 +1,15 @@
 package com.groups.BrainTrainApp.Utils
 
-import android.content.Context
-import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
+import android.view.View
 
-import com.groups.BrainTrainApp.Components.Common.ButtonCustom
-import com.groups.BrainTrainApp.R
-
-fun borderButton( button: ButtonCustom, color: Int) {
-    val existingBackground = button.background
+fun <T : View> borderView(view: T, color: Int) {
+    val existingBackground = view.background
     val border = GradientDrawable()
     border.setStroke(10, color)
     val layers = arrayOf(existingBackground, border)
     val layerDrawable = LayerDrawable(layers)
     border.cornerRadius = 8f
-    button.background = layerDrawable
+    view.background = layerDrawable
 }

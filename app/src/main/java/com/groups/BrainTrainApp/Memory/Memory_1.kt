@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
-import com.groups.BrainTrainApp.Utils.borderButton
+import com.groups.BrainTrainApp.Utils.borderView
 import com.groups.BrainTrainApp.Utils.drawButton
 import java.util.Locale
 
@@ -82,18 +82,28 @@ class Memory_1 : AppCompatActivity() {
     private fun chosenButton(clickedButton: ButtonCustom){
         if(clickedButton.isChoose){
             Log.d("lose","u lose")
+            borderView(clickedButton,Color.RED)
+            handler.postDelayed({
+                for (i in buttonList.indices) {
+                    val button = buttonList[i]
+                    if(!button.isChoose)
+                        borderView(button,Color.BLUE)
+                }
+            }, 2000)
         }
-        val existingBackground = clickedButton.background
-        clickedButton.isChoose = true
-        //clickedButton.setImageResource(R.drawable.border_square)
+        else {
+            val existingBackground = clickedButton.background
+            clickedButton.isChoose = true
+            //clickedButton.setImageResource(R.drawable.border_square)
 //
-       borderButton(clickedButton,Color.BLUE)
+            borderView(clickedButton, Color.BLUE)
 
-        handler.postDelayed({
+            handler.postDelayed({
 
-            addButton()
-            clickedButton.background = existingBackground
-        }, 3000)
+                addButton()
+                clickedButton.background = existingBackground
+            }, 3000)
+        }
     }
 
 

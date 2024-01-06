@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.groups.BrainTrainApp.Adapter.GameAdapter
 import com.groups.BrainTrainApp.Components.Attention.FindPairs.FindPairs
 import com.groups.BrainTrainApp.Memory.Memory_1
+import com.groups.BrainTrainApp.Memory.Memory_2
 import com.groups.BrainTrainApp.Model.Game
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         btnRedirect = findViewById<Button>(R.id.btnredirect)
         btnRedirect.setOnClickListener {
-            startActivity(Intent(this, Memory_1::class.java))
+            startActivity(Intent(this, Memory_2::class.java))
         }
     }
 

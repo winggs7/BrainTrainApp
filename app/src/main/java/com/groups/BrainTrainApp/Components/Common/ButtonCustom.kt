@@ -2,11 +2,14 @@ package com.groups.BrainTrainApp.Components.Common
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageButton
 
-class ButtonCustom : AppCompatImageButton {
+class ButtonCustom : AppCompatButton  {
     var isChoose: Boolean = false
+    var isMark: Boolean = false
     var backgroundResourceId: Int? = null
     var marginStart: Int = 10
     var marginTop: Int = 10
@@ -38,4 +41,5 @@ class ButtonCustom : AppCompatImageButton {
         this.layoutParams = layoutParams
         this.requestLayout()
     }
+
 }
