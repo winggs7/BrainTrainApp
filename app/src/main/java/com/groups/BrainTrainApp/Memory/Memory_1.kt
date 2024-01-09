@@ -1,18 +1,32 @@
 package com.groups.BrainTrainApp.Memory
 
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
+import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
+import com.groups.BrainTrainApp.Utils.borderView
+import com.groups.BrainTrainApp.Utils.drawButton
+import java.util.Locale
+
 class Memory_1 : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
-    private val buttonList: MutableList<MyButton> = mutableListOf()
+    private val buttonList: MutableList<ButtonCustom> = mutableListOf()
+    private val imageNames: MutableList<String> = mutableListOf()
     lateinit var btnBack: Button
+    private var handler: Handler = Handler(Looper.getMainLooper())
     var count = 3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,69 +35,76 @@ class Memory_1 : AppCompatActivity() {
         btnBack.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
         }
-
+        createListImage()
         totalLayout = findViewById(R.id.totalLayout)
         addButton()
         addButton()
         addButton()
     }
+
+    private fun createListImage(){
+        for (i in 1 until 10){
+            imageNames.add("m$i")
+        }
+    }
+    fun getRandomImageName(): String {
+
+        val randomIndex = (0 until imageNames.size).random()
+
+        return imageNames.removeAt(randomIndex)
+    }
+    fun loadImageIntoButton(targetButton: ButtonCustom) {
+        var a = getResourceId(this,getRandomImageName())
+        targetButton.setBackgroundResource(a)
+    }
+    fun getResourceId(context: Context, name: String): Int {
+        var name = name.lowercase(Locale.getDefault())
+        return context.resources.getIdentifier(name, "drawable", context.packageName)
+    }
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
-            drawButtons()
+            drawButton(this,totalLayout,buttonList,count)
         }
     }
 
     private fun addButton() {
-        val newButton = MyButton(this)
-        newButton.text = "${buttonList.size}"
+        val newButton = ButtonCustom(this)
+      //  newButton.text = "${buttonList.size}"
+        loadImageIntoButton(newButton)
         newButton.setOnClickListener {
             chosenButton(newButton)
         }
         buttonList.add(newButton)
         buttonList.shuffle()
-        drawButtons()
+        drawButton(this,totalLayout,buttonList,count)
     }
-    private fun chosenButton(clickedButton: MyButton){
+    private fun chosenButton(clickedButton: ButtonCustom){
         if(clickedButton.isChoose){
             Log.d("lose","u lose")
+            borderView(clickedButton,Color.RED)
+            handler.postDelayed({
+                for (i in buttonList.indices) {
+                    val button = buttonList[i]
+                    if(!button.isChoose)
+                        borderView(button,Color.BLUE)
+                }
+            }, 2000)
         }
-        clickedButton.isChoose = true
-        addButton()
+        else {
+            val existingBackground = clickedButton.background
+            clickedButton.isChoose = true
+            //clickedButton.setImageResource(R.drawable.border_square)
+//
+            borderView(clickedButton, Color.BLUE)
+
+            handler.postDelayed({
+
+                addButton()
+                clickedButton.background = existingBackground
+            }, 3000)
+        }
     }
 
-    private fun drawButtons() {
-        totalLayout.removeAllViews()
 
-        var currentRow: LinearLayout? = null
-        val a = totalLayout.width
-
-//        if(totalLayout.height <= (totalLayout.width/count+50) *  ceil((buttonList.size/count).toFloat())){
-//            count ++
-//        }
-        if(buttonList.size == (count)*(count+1)){
-            count ++
-        }
-        for (i in buttonList.indices) {
-
-            val button = buttonList[i]
-
-            button.layoutParams = ViewGroup.LayoutParams(a/count, a/count)
-            if (button.parent != null) {
-                (button.parent as? ViewGroup)?.removeView(button)
-            }
-
-
-            if (i % count == 0) {
-                currentRow = LinearLayout(this)
-                currentRow.orientation = LinearLayout.HORIZONTAL
-                currentRow.setHorizontalGravity(1)
-                totalLayout.addView(currentRow)
-            }
-            currentRow?.addView(button)
-
-        }
-        totalLayout.requestLayout()
-
-    }
 }
