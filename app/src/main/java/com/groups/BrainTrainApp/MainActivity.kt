@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
                 handler.postDelayed(runnable, 5000)
             }
         })
+
+//        val intent = Intent(this, Memory_1::class.java)
+//        startActivity(intent)
     }
 
     override fun onPause() {

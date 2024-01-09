@@ -1,6 +1,7 @@
 package com.groups.BrainTrainApp.Components.Attention.FindPairs
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -19,9 +20,11 @@ import com.groups.BrainTrainApp.Datas.easyImages
 import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
+import com.groups.BrainTrainApp.Utils.borderView
 import com.groups.BrainTrainApp.Utils.drawButton
 import com.groups.BrainTrainApp.Utils.handleEndGame
 import com.groups.BrainTrainApp.Utils.handleProgressBar
+import com.groups.BrainTrainApp.Utils.removeBorderView
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
@@ -167,12 +170,17 @@ class FindPairs : AppCompatActivity() {
         if(clickedButton.isChoose){
             //TODO handle LOSE situation
         }
+
         clickedButton.isChoose = !clickedButton.isChoose
         if(chosenList.size < 1) {
+            borderView(clickedButton, Color.RED)
+
             drawButton(this, container, buttonList, count).requestLayout()
             chosenList.add(clickedButton)
             Log.i("Size", chosenList.size.toString())
         } else {
+            borderView(clickedButton, Color.RED)
+
             drawButton(this, container, buttonList, count).requestLayout()
             chosenList.add(clickedButton)
             compare()
@@ -211,6 +219,10 @@ class FindPairs : AppCompatActivity() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     resetGame()
                 }, 500)
+            }
+        } else {
+            buttonList.map {
+                removeBorderView(it)
             }
         }
     }

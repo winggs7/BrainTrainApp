@@ -203,9 +203,11 @@ class Ship : AppCompatActivity() {
             }
         }
 
-        button.setImageResource(R.drawable.border)
+        //TODO add border
+//        button.setImageResource(R.drawable.border)
         Handler(Looper.getMainLooper()).postDelayed({
-            button.setImageResource(R.drawable.border_none)
+            //TODO remove background
+//            button.setImageResource(R.drawable.border_none)
             button.isChoose = false
         }, 1000)
     }
