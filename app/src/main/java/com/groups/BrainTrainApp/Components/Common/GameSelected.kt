@@ -1,36 +1,54 @@
-package com.groups.BrainTrainApp
+package com.groups.BrainTrainApp.Components.Common
 
 import GameType
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.groups.BrainTrainApp.Adapter.GameAdapter
-import com.groups.BrainTrainApp.Components.Common.GameEnd
-import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Datas.attentionList
 import com.groups.BrainTrainApp.Datas.mainPageList
-import com.groups.BrainTrainApp.Components.Attention.FindPairs.FindPairs
-import com.groups.BrainTrainApp.Memory.Memory_1
-import com.groups.BrainTrainApp.Memory.Memory_2
+import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.Model.Game
+import com.groups.BrainTrainApp.R
 import kotlin.math.abs
 
-class MainActivity : AppCompatActivity() {
+class GameSelected : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var handler: Handler
     private lateinit var gameAdapter: GameAdapter
+
+    lateinit var btnHome: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        renderGameViewPager(mainPageList)
+        btnHome = findViewById(R.id.btn_home)
+        btnHome.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+
+        val type = intent.getStringExtra("type")
+        val typeGame : GameType = enumValueOf(type!!)
+        if (typeGame == GameType.ATTENTION) {
+            renderGameViewPager(attentionList)
+        } else if (typeGame == GameType.MEMORY) {
+            //TODO
+        } else if (typeGame == GameType.MEMORY) {
+            //TODO
+        } else if (typeGame == GameType.MEMORY) {
+            //TODO
+        }
         setUpTransformer()
         viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -72,11 +90,14 @@ class MainActivity : AppCompatActivity() {
             override fun onClick(position: Int, model: Game) {
                 if (model.className != null) {
                     handleRedirectTest(model.className!!)
-                } else if (model.className == null) {
-                    handleChangeRecycleViewTest(model.type)
                 }
             }
         })
+    }
+
+    private fun handleRedirectTest(java: Class<*>): Intent? {
+        startActivity(Intent(this, java))
+        return null
     }
 
     private fun setUpTransformer() {
@@ -88,16 +109,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         viewPager2.setPageTransformer(transformer)
-    }
-
-    private fun handleChangeRecycleViewTest(type: GameType) {
-        val intent = Intent(this, GameSelected::class.java)
-        intent.putExtra("type", type.toString())
-        startActivity(intent)
-    }
-
-    private fun handleRedirectTest(java: Class<*>): Intent? {
-        startActivity(Intent(this, java))
-        return null
     }
 }
