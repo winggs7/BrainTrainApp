@@ -10,13 +10,20 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
+import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.Timer
+import com.groups.BrainTrainApp.Datas.easyImages
 import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.drawButton
+import com.groups.BrainTrainApp.Utils.handleEndGame
 import com.groups.BrainTrainApp.Utils.handleProgressBar
+import java.text.DecimalFormat
+import kotlin.math.roundToInt
 
 
 class FindPairs : AppCompatActivity() {
@@ -34,26 +41,41 @@ class FindPairs : AppCompatActivity() {
 
     var count: Int = 4
 
-    var time = 20
+    //TODO declare attributes for timer
+    var totalPlayTime: Int = 0
     lateinit var progressBar: ProgressBar
-    lateinit var progressText: TextView
+    private val countDownTime = 20 //second
+    private val clockTime = (countDownTime*1000).toLong()
+    private val progressTime = (clockTime / 1000).toFloat()
+    private lateinit var timer: Timer
+    private val onBackPressedCallBack= object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            onBackPressedMethod()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_pairs)
 
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
+
         btnBack = findViewById<Button>(R.id.btnback)
         btnBack.setOnClickListener{
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, GameSelected::class.java)
+            intent.putExtra("type", GameType.ATTENTION.toString())
+            startActivity(intent)
         }
 
         progressBar = findViewById(R.id.progress_bar)
-        progressText = findViewById(R.id.progress_count)
-        progressText.text = time.toString() + "s"
+//        progressText = findViewById(R.id.progress_count)
+//        progressText.text = time.toString() + "s"
 
         container = findViewById(R.id.find_pair_container)
-        scoreView = findViewById(R.id.find_pair_score)
+        scoreView = findViewById(R.id.score_view)
         imageList = easyImages
+
+        setupTimer()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -61,11 +83,61 @@ class FindPairs : AppCompatActivity() {
 
         if(hasFocus) {
             resetGame()
-            handleProgressBar(progressBar, progressText, time, ::handleTimeUp)
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        timer.pauseTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        timer.resumeTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.destroyTimer()
+    }
+
+    private fun setupTimer() {
+        var secondLeft = 0
+        timer = object : Timer(clockTime, 1000) {}
+        timer.onTick = {millisUntilFinished ->
+            val second = (millisUntilFinished / 1000.0f).roundToInt()
+            if (second != secondLeft) {
+                secondLeft = second
+                totalPlayTime++
+
+                Log.i("totalPlayTime", totalPlayTime.toString())
+
+                progressBar.progress = secondLeft
+            }
+        }
+        timer.onFinish = {
+            Log.i("onFinish", "onFinish")
+            handleTimeUp()
+        }
+        progressBar.max = progressTime.toInt()
+        progressBar.progress = progressTime.toInt()
+        timer.startTimer()
+    }
+
+    private fun timerFormat(secondLeft: Int, timeTxt: TextView) {
+        progressBar.progress = secondLeft
+    }
+
+    private fun onBackPressedMethod() {
+        timer.destroyTimer()
+        finish()
+    }
+
     private fun resetGame() {
+        if (currentRound > MAX_ROUND) {
+            handleTimeUp()
+        }
+
         val randomList = handleRandomImage(imageList)
         for (i in randomList.indices) {
             addPairs(randomList[i])
@@ -131,6 +203,11 @@ class FindPairs : AppCompatActivity() {
                 currentRound++
                 correctNum = 0
                 buttonList = mutableListOf()
+
+                progressBar.progress = progressTime.toInt()
+                timer.restartTimer()
+                timer.startTimer()
+
                 Handler(Looper.getMainLooper()).postDelayed({
                     resetGame()
                 }, 500)
@@ -140,10 +217,6 @@ class FindPairs : AppCompatActivity() {
 
     private fun handleTimeUp() {
         //TODO handle lose
-        val text = "Timeup!"
-        val duration = Toast.LENGTH_SHORT
-
-        val toast = Toast.makeText(this, text, duration)
-        toast.show()
+        handleEndGame(this, score, totalPlayTime)
     }
 }

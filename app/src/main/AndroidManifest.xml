@@ -16,6 +16,18 @@
         android:theme="@style/Theme.BrainTrainApp"
         tools:targetApi="31">
         <activity
+            android:name=".Components.Common.GameEnd"
+            android:exported="false" />
+        <activity
+            android:name=".Components.Common.GameSelected"
+            android:exported="false" />
+        <activity
+            android:name=".Components.Common.ChooseGame"
+            android:exported="false" />
+        <activity
+            android:name=".Components.Attention.Ship.Ship"
+            android:exported="false" />
+        <activity
             android:name=".Components.Attention.FindPairs.FindPairs"
             android:exported="false" />
         <activity
