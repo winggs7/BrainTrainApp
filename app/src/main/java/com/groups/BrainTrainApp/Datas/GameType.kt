@@ -19,8 +19,3 @@ val attentionList: ArrayList<Game> = arrayListOf (
     Game("Find pairs", R.drawable.brain, GameType.ATTENTION, FindPairs::class.java ),
     Game("Ship", R.drawable.brain, GameType.ATTENTION, Ship::class.java ),
 )
-
-val gameList: Map<GameType, ArrayList<Game>> = mapOf(
-    GameType.ATTENTION to attentionList,
-)
-
