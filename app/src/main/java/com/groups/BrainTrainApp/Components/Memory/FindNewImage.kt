@@ -9,13 +9,17 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.Observer
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
-import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Components.Common.Timer
+import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Datas.easyMemoryImages
+import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.Datas.normalMemoryImages
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
@@ -28,6 +32,8 @@ import kotlin.math.roundToInt
 
 
 class FindNewImage : AppCompatActivity() {
+    private val viewModel: LevelViewModel by viewModels()
+
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<ButtonCustom> = mutableListOf()
     lateinit var btnBack: AppCompatButton
@@ -46,8 +52,23 @@ class FindNewImage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_new_image)
-        btnBack = findViewById(R.id.btnback)
+
+        viewModel.selectedLevel.observe(this, Observer { level ->
+            //TODO handle game's difficulty
+            when (level) {
+                Level.EASY -> {
+
+                }
+                Level.NORMAL -> {
+
+                }
+                else -> {
+
+                }
+            }
+        })
         timer = object : Timer(clockTime, 1000) {}
+        btnBack = findViewById<AppCompatButton>(R.id.btnback)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
             intent.putExtra("type", GameType.MEMORY.toString())

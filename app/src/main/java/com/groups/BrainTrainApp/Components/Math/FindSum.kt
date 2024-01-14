@@ -2,19 +2,25 @@ package com.groups.BrainTrainApp.Components.Math
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.Observer
 import com.google.android.flexbox.FlexboxLayout
 import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Components.Common.LevelViewModel
+import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.R
 import kotlin.random.Random
 
 
 class FindSum : AppCompatActivity() {
+    private val viewModel: LevelViewModel by viewModels()
+
     private lateinit var answerLayout: FlexboxLayout
     private lateinit var btnBack: AppCompatButton
     private lateinit var stageTxt: TextView
@@ -30,6 +36,22 @@ class FindSum : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_sum)
+
+        viewModel.selectedLevel.observe(this, Observer { level ->
+            //TODO handle game's difficulty
+            when (level) {
+                Level.EASY -> {
+
+                }
+                Level.NORMAL -> {
+
+                }
+                else -> {
+
+                }
+            }
+        })
+
         btnBack = findViewById(R.id.button_back)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
@@ -41,6 +63,7 @@ class FindSum : AppCompatActivity() {
         scoreTxt = findViewById(R.id.score_txt)
         options.addAll((sum/10..sum/2).toList())
         options.addAll((sum/2..sum-sum/10).toList())
+
         init()
     }
 

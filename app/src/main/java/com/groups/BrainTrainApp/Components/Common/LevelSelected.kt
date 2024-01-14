@@ -24,15 +24,15 @@ class LevelSelected : Fragment() {
         val view = inflater.inflate(R.layout.activity_select_level, container, false)
         optionEasy = view.findViewById(R.id.option_easy)
         optionEasy.setOnClickListener{
-            viewModel.selectItem(Level.EASY)
+            viewModel.selectLevel(Level.EASY)
         }
         optionNormal = view.findViewById(R.id.option_normal)
         optionNormal.setOnClickListener {
-            viewModel.selectItem(Level.NORMAL)
+            viewModel.selectLevel(Level.NORMAL)
         }
         optionHard = view.findViewById(R.id.option_hard)
         optionHard.setOnClickListener {
-            viewModel.selectItem(Level.HARD)
+            viewModel.selectLevel(Level.HARD)
         }
         return view
     }
