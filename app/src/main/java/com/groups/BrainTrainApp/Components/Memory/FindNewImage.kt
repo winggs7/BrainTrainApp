@@ -1,66 +1,55 @@
-package com.groups.BrainTrainApp.Memory
+package com.groups.BrainTrainApp.Components.Memory
 
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.LayerDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
+import com.groups.BrainTrainApp.Datas.easyMemoryImages
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.borderView
+import com.groups.BrainTrainApp.Utils.disableAllButton
 import com.groups.BrainTrainApp.Utils.drawButton
-import java.util.Locale
+import com.groups.BrainTrainApp.Utils.enableAllButton
 
-class Memory_1 : AppCompatActivity() {
+
+class FindNewImage : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<ButtonCustom> = mutableListOf()
-    private val imageNames: MutableList<String> = mutableListOf()
     lateinit var btnBack: Button
+    private var imageList: MutableList<Int> = mutableListOf()
     private var handler: Handler = Handler(Looper.getMainLooper())
     var count = 3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.memory_game_1)
+        setContentView(R.layout.activity_game_find_new_image)
         btnBack = findViewById<Button>(R.id.btnback)
         btnBack.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
         }
-        createListImage()
+        imageList.addAll(easyMemoryImages)
         totalLayout = findViewById(R.id.totalLayout)
         addButton()
         addButton()
         addButton()
     }
 
-    private fun createListImage(){
-        for (i in 1 until 10){
-            imageNames.add("m$i")
-        }
-    }
-    fun getRandomImageName(): String {
-
-        val randomIndex = (0 until imageNames.size).random()
-
-        return imageNames.removeAt(randomIndex)
+    fun getRandomImage(): Int {
+        val randomIndex = (0 until imageList.size).random()
+        return imageList.removeAt(randomIndex)
     }
     fun loadImageIntoButton(targetButton: ButtonCustom) {
-        var a = getResourceId(this,getRandomImageName())
+        val a = getRandomImage()
         targetButton.setBackgroundResource(a)
     }
-    fun getResourceId(context: Context, name: String): Int {
-        var name = name.lowercase(Locale.getDefault())
-        return context.resources.getIdentifier(name, "drawable", context.packageName)
-    }
+
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
         if (hasFocus) {
@@ -78,11 +67,15 @@ class Memory_1 : AppCompatActivity() {
         buttonList.add(newButton)
         buttonList.shuffle()
         drawButton(this,totalLayout,buttonList,count)
+        if (buttonList.size == (count) * (count + 1)) {
+            count++
+        }
     }
     private fun chosenButton(clickedButton: ButtonCustom){
         if(clickedButton.isChoose){
             Log.d("lose","u lose")
             borderView(clickedButton,Color.RED)
+            disableAllButton(buttonList)
             handler.postDelayed({
                 for (i in buttonList.indices) {
                     val button = buttonList[i]
@@ -94,12 +87,13 @@ class Memory_1 : AppCompatActivity() {
         else {
             val existingBackground = clickedButton.background
             clickedButton.isChoose = true
+            disableAllButton(buttonList)
             //clickedButton.setImageResource(R.drawable.border_square)
 //
             borderView(clickedButton, Color.BLUE)
 
             handler.postDelayed({
-
+                enableAllButton(buttonList)
                 addButton()
                 clickedButton.background = existingBackground
             }, 3000)

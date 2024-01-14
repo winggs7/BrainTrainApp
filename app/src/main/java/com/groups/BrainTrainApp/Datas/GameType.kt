@@ -4,6 +4,10 @@ import GameType
 import com.groups.BrainTrainApp.Components.Attention.FindDifferences.FindDifferences
 import com.groups.BrainTrainApp.Components.Attention.FindPairs.FindPairs
 import com.groups.BrainTrainApp.Components.Attention.Ship.Ship
+import com.groups.BrainTrainApp.Components.Memory.FindNewImage
+import com.groups.BrainTrainApp.Components.Memory.RememberColor
+import com.groups.BrainTrainApp.Components.Memory.RememberImage
+
 import com.groups.BrainTrainApp.Model.Game
 import com.groups.BrainTrainApp.R
 
@@ -19,3 +23,14 @@ val attentionList: ArrayList<Game> = arrayListOf (
     Game("Find pairs", R.drawable.brain, GameType.ATTENTION, FindPairs::class.java ),
     Game("Ship", R.drawable.brain, GameType.ATTENTION, Ship::class.java ),
 )
+
+val memoryList: ArrayList<Game> = arrayListOf (
+    Game("Find new image", R.drawable.brain, GameType.MEMORY, FindNewImage::class.java ),
+    Game("Remember color", R.drawable.brain, GameType.MEMORY, RememberColor::class.java ),
+    Game("Remember image", R.drawable.brain, GameType.MEMORY, RememberImage::class.java ),
+)
+
+val gameList: Map<GameType, ArrayList<Game>> = mapOf(
+    GameType.ATTENTION to attentionList,
+)
+

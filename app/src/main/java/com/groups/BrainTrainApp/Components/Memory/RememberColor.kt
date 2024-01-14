@@ -1,22 +1,20 @@
-package com.groups.BrainTrainApp.Memory
+package com.groups.BrainTrainApp.Components.Memory
 
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
-import com.groups.BrainTrainApp.Utils.borderView
+import com.groups.BrainTrainApp.Utils.disableAllButton
 import com.groups.BrainTrainApp.Utils.drawButton
 
-class Memory_2 : AppCompatActivity() {
+class RememberColor : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<ButtonCustom> = mutableListOf()
     lateinit var btnBack: Button
@@ -27,7 +25,7 @@ class Memory_2 : AppCompatActivity() {
     private var handler: Handler = Handler(Looper.getMainLooper())
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.memory_game_1)
+        setContentView(R.layout.activity_game_find_new_image)
         btnBack = findViewById<Button>(R.id.btnback)
         btnBack.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
@@ -65,7 +63,7 @@ class Memory_2 : AppCompatActivity() {
             clickedButton.setBackgroundColor(Color.BLUE)
             playercount++
             if (playercount == count) {
-                disableAllButton()
+                disableAllButton(buttonList)
                 playercount = 0
                 count++
                 handler.postDelayed({
@@ -76,7 +74,7 @@ class Memory_2 : AppCompatActivity() {
         } else {
             clickedButton.setBackgroundColor(Color.RED)
             appearColor()
-            disableAllButton()
+            disableAllButton(buttonList)
         }
     }
 
@@ -96,12 +94,6 @@ class Memory_2 : AppCompatActivity() {
         }
     }
 
-    private fun disableAllButton() {
-        for (i in buttonList.indices) {
-            val button = buttonList[i]
-            button.isEnabled = false
-        }
-    }
 
     private fun nextLv() {
         for (i in 0 until count) {
@@ -111,7 +103,7 @@ class Memory_2 : AppCompatActivity() {
         for (i in 0 until numCol) {
             addButton()
         }
-        disableAllButton()
+        disableAllButton(buttonList)
         if (!lvFlag) {
             lvFlag = true
             numCol++
