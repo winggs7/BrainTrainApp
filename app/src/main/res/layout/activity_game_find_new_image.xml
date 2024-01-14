@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parentLayout"
+    tools:context=".MainActivity"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/ltblue"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/btnback"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Back"
-        android:textSize="30sp"/>
-
+    android:layout_height="match_parent">
     <LinearLayout
-        android:id="@+id/totalLayout"
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center">
-
+        android:background="@color/ltblue">
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnback"
+            android:layout_marginTop = "10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back_button"
+            />
+        <LinearLayout
+            android:id="@+id/totalLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="8"
+            android:orientation="vertical"
+            android:gravity="center">
+        </LinearLayout>
     </LinearLayout>
-
-</LinearLayout>
+    <fragment
+        android:id="@+id/level_container"
+        android:name="com.groups.BrainTrainApp.Components.Common.LevelSelected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

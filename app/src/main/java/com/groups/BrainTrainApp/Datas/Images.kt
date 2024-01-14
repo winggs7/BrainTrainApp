@@ -2,24 +2,7 @@ package com.groups.BrainTrainApp.Datas
 
 import com.groups.BrainTrainApp.R
 
-val easyImages: Array<Int> = arrayOf(
-    R.drawable.df_1,
-    R.drawable.df_2,
-    R.drawable.df_3,
-    R.drawable.df_4,
-    R.drawable.df_5,
-    R.drawable.df_6,
-    R.drawable.df_7,
-    R.drawable.df_8,
-    R.drawable.df_9,
-    R.drawable.df_10,
-    R.drawable.df_11,
-    R.drawable.df_12,
-    R.drawable.df_13,
-    R.drawable.df_14,
-)
-
-val easyMemoryImages: Array<Int> = arrayOf(
+val easyAnimalImages: Array<Int> = arrayOf(
     R.drawable.mmr_easy_1,
     R.drawable.mmr_easy_2,
     R.drawable.mmr_easy_3,
@@ -97,7 +80,7 @@ val easyMemoryImages: Array<Int> = arrayOf(
     R.drawable.mmr_easy_75,
 )
 
-val normalMemoryImages: Array<Int> = arrayOf(
+val normalFoodImages: Array<Int> = arrayOf(
     R.drawable.mmr_normal_1,
     R.drawable.mmr_normal_2,
     R.drawable.mmr_normal_3,
@@ -200,7 +183,7 @@ val normalMemoryImages: Array<Int> = arrayOf(
     R.drawable.mmr_normal_100
 )
 
-val hardMemoryImages: Array<Int> = arrayOf(
+val hardFlowerImages: Array<Int> = arrayOf(
     R.drawable.mmr_hard_1,
     R.drawable.mmr_hard_2,
     R.drawable.mmr_hard_3,

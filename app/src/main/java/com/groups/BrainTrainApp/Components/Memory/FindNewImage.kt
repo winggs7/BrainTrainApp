@@ -1,22 +1,23 @@
 package com.groups.BrainTrainApp.Components.Memory
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.Button
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.Observer
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
-import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Components.Common.Timer
-import com.groups.BrainTrainApp.Datas.easyMemoryImages
-import com.groups.BrainTrainApp.Datas.normalMemoryImages
-import com.groups.BrainTrainApp.MainActivity
+import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Datas.normalFoodImages
+import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.borderView
 import com.groups.BrainTrainApp.Utils.disableAllButton
@@ -27,9 +28,11 @@ import kotlin.math.roundToInt
 
 
 class FindNewImage : AppCompatActivity() {
+    private val viewModel: LevelViewModel by viewModels()
+
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<ButtonCustom> = mutableListOf()
-    lateinit var btnBack: Button
+    lateinit var btnBack: AppCompatButton
     private lateinit var timer: Timer
     private val clockTime = (9999*1000).toLong()
     var totalPlayTime: Int = 0
@@ -45,15 +48,30 @@ class FindNewImage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_new_image)
+
+        viewModel.selectedLevel.observe(this, Observer { level ->
+            //TODO handle game's difficulty
+            when (level) {
+                Level.EASY -> {
+
+                }
+                Level.NORMAL -> {
+
+                }
+                else -> {
+
+                }
+            }
+        })
         timer = object : Timer(clockTime, 1000) {}
-        btnBack = findViewById<Button>(R.id.btnback)
+        btnBack = findViewById<AppCompatButton>(R.id.btnback)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
             intent.putExtra("type", GameType.MEMORY.toString())
             startActivity(intent)
         }
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
-        imageList.addAll(normalMemoryImages)
+        imageList.addAll(normalFoodImages)
         totalLayout = findViewById(R.id.totalLayout)
         addButton()
         addButton()
