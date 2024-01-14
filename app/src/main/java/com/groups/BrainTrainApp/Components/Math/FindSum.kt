@@ -2,20 +2,27 @@ package com.groups.BrainTrainApp.Components.Math
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.CheckBox
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.flexbox.FlexboxLayout
+import com.groups.BrainTrainApp.Components.Attention.FindPairs.MAX_ROUND
 import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Components.Common.LevelViewModel
+import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.R
+import com.groups.BrainTrainApp.Utils.handleEndGame
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 
 class FindSum : AppCompatActivity() {
     private lateinit var answerLayout: FlexboxLayout
+    private lateinit var progressBar: ProgressBar
     private lateinit var btnBack: AppCompatButton
     private lateinit var stageTxt: TextView
     private lateinit var scoreTxt: TextView
@@ -23,7 +30,11 @@ class FindSum : AppCompatActivity() {
     private var cbLst = mutableListOf<CheckBox>()
     private var optionLst = mutableListOf<Pair<Boolean, Int>>()
     private var options = mutableListOf<Int>()
-    private var time = 10
+    private lateinit var timer: Timer
+    private val countDownTime = 20 //second
+    private val clockTime = (countDownTime*1000).toLong()
+    private val progressTime = (clockTime / 1000).toFloat()
+    var totalPlayTime: Int = 0
     private var sum = 100
     private var stage = 1
     private var score = 0
@@ -36,11 +47,13 @@ class FindSum : AppCompatActivity() {
             intent.putExtra("type", GameType.MATH.toString())
             startActivity(intent)
         }
+        progressBar = findViewById(R.id.progress_bar)
         answerLayout = findViewById(R.id.answer_layout)
         stageTxt = findViewById(R.id.question_number)
         scoreTxt = findViewById(R.id.score_txt)
         options.addAll((sum/10..sum/2).toList())
         options.addAll((sum/2..sum-sum/10).toList())
+        timer = object : Timer(clockTime, 1000) {}
         init()
     }
 
@@ -49,6 +62,20 @@ class FindSum : AppCompatActivity() {
         if (hasFocus) {
             drawCheckBox()
         }
+    }
+    override fun onPause() {
+        super.onPause()
+        timer.pauseTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        timer.resumeTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.destroyTimer()
     }
 
     private fun init(){
@@ -60,11 +87,15 @@ class FindSum : AppCompatActivity() {
     }
 
     private fun resetGame(){
-        stageTxt.setText("Câu hỏi: ${stage}")
-        scoreTxt.setText("Điểm số: ${score}")
-        generateOptions()
-        setCheckBoxs()
-        drawCheckBox()
+        if (stage > 15) {
+            handleTimeUp()
+        } else {
+            stageTxt.setText("Câu hỏi: ${stage}")
+            scoreTxt.setText("Điểm số: ${score}")
+            generateOptions()
+            setCheckBoxs()
+            drawCheckBox()
+        }
     }
 
     private  fun addCheckBox(){
@@ -99,7 +130,6 @@ class FindSum : AppCompatActivity() {
         }
     }
 
-
     private fun attachListener(cb: CheckBox){
         cb.setOnClickListener {
             var number = Integer.parseInt(cb.text.toString())
@@ -128,6 +158,11 @@ class FindSum : AppCompatActivity() {
                 stage += 1
                 showResult()
                 android.os.Handler().postDelayed({
+//                    //restart timer
+//                    progressBar.progress = progressTime.toInt()
+//                    timer.restartTimer()
+//                    timer.startTimer()
+                    setupTimer()
                     resetGame()
                 }, 2000)
             }
@@ -201,5 +236,29 @@ class FindSum : AppCompatActivity() {
             setBackgroundCheckbox(cbLst[index], R.color.grey, R.drawable.rounded_checkbox, R.drawable.checkbox_empty)
             cbLst[index].setText(optionLst[index].second.toString())
         }
+    }
+
+    private fun setupTimer() {
+        var secondLeft = 0
+        timer.onTick = {millisUntilFinished ->
+            val second = (millisUntilFinished / 1000.0f).roundToInt()
+            if (second != secondLeft) {
+                secondLeft = second
+                totalPlayTime++
+                Log.i("totalPlayTime", totalPlayTime.toString())
+                progressBar.progress = secondLeft
+            }
+        }
+        timer.onFinish = {
+            handleTimeUp()
+        }
+        progressBar.max = progressTime.toInt()
+        progressBar.progress = progressTime.toInt()
+        timer.startTimer()
+    }
+
+    private fun handleTimeUp() {
+        //TODO handle lose
+        handleEndGame(this, score, totalPlayTime)
     }
 }

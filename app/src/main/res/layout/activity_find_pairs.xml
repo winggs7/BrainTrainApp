@@ -85,9 +85,9 @@
                 android:layout_height="150dp" />
         </LinearLayout>
     </LinearLayout>
-        <fragment
-            android:id="@+id/level_container"
-            android:name="com.groups.BrainTrainApp.Components.Common.LevelSelected"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+<!--        <fragment-->
+<!--            android:id="@+id/level_container"-->
+<!--            android:name="com.groups.BrainTrainApp.Components.Common.LevelSelected"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"/>-->
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -61,9 +61,7 @@ class FindPairs : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_pairs)
-
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
-
         btnBack = findViewById(R.id.btnback)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
@@ -78,13 +76,11 @@ class FindPairs : AppCompatActivity() {
         container = findViewById(R.id.find_pair_container)
         scoreView = findViewById(R.id.score_view)
         imageList = easyImages
-
         setupTimer()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
-
         if(hasFocus) {
             resetGame()
         }
@@ -115,7 +111,6 @@ class FindPairs : AppCompatActivity() {
                 totalPlayTime++
 
                 Log.i("totalPlayTime", totalPlayTime.toString())
-
                 progressBar.progress = secondLeft
             }
         }
@@ -157,7 +152,6 @@ class FindPairs : AppCompatActivity() {
 
     private fun addPairs(image: Int) {
         val newButton = ButtonCustom(this)
-
         newButton.setBackgroundResource(image)
         newButton.backgroundResourceId = image
         newButton.setOnClickListener {
