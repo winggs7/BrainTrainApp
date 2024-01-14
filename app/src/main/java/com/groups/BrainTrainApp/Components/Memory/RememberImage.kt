@@ -17,8 +17,9 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
+import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Components.Common.Timer
-import com.groups.BrainTrainApp.Datas.easyMemoryImages
+import com.groups.BrainTrainApp.Datas.easyAnimalImages
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.borderView
@@ -60,7 +61,9 @@ class RememberImage : AppCompatActivity() {
         setContentView(R.layout.activity_game_remeber_image)
         btnBack = findViewById(R.id.btnback)
         btnBack.setOnClickListener{
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, GameSelected::class.java)
+            intent.putExtra("type", GameType.MEMORY.toString())
+            startActivity(intent)
         }
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
         btnCheck = findViewById(R.id.btnCheck)
@@ -76,7 +79,7 @@ class RememberImage : AppCompatActivity() {
         attempTextView= layoutAttemp.findViewById(R.id.textAttemptPoint)
         timer = object : Timer(clockTime, 1000) {}
         progressBar = findViewById(R.id.progress_bar)
-        imageList.addAll(easyMemoryImages)
+        imageList.addAll(easyAnimalImages)
         questionLayout = findViewById(R.id.questionLayout)
         answerLayout = findViewById(R.id.answerLayout)
         addButton(buttonListQuestion,4,questionLayout,false)

@@ -3,20 +3,31 @@ package com.groups.BrainTrainApp.Components.Math
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.CheckBox
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatButton
 import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.R
+import com.groups.BrainTrainApp.Utils.handleEndGame
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 class FindSmaller : AppCompatActivity() {
     private lateinit var stageTxt: TextView
     private lateinit var scoreTxt: TextView
     private lateinit var btnBack: AppCompatButton
+    private lateinit var progressBar: ProgressBar
     private lateinit var cb1: CheckBox
     private lateinit var cb2: CheckBox
     private var cbList = mutableListOf<CheckBox>()
+    private lateinit var timer: Timer
+    private val countDownTime = 20 //second
+    private val clockTime = (countDownTime*1000).toLong()
+    private val progressTime = (clockTime / 1000).toFloat()
+    var totalPlayTime: Int = 0
     private var option1 = 0
     private var option2 = 0
     private var optionList = mutableListOf<Triple<Boolean, Int, String>>()
@@ -34,6 +45,7 @@ class FindSmaller : AppCompatActivity() {
             intent.putExtra("type", GameType.MATH.toString())
             startActivity(intent)
         }
+        progressBar = findViewById(R.id.progress_bar)
         stageTxt = findViewById(R.id.question_number)
         scoreTxt = findViewById(R.id.score_txt)
         cb1 = findViewById(R.id.checkbox1)
@@ -41,13 +53,54 @@ class FindSmaller : AppCompatActivity() {
         cb2 = findViewById(R.id.checkbox2)
         cbList.add(cb2)
         handleClicked(cbList)
+        timer = object : Timer(clockTime, 1000) {}
         resetGame()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer.pauseTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        timer.resumeTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.destroyTimer()
     }
 
     private fun resetGame(){
         stageTxt.setText("Câu hỏi: $stage")
         scoreTxt.setText("Điểm số: $score")
+        setupTimer()
         generateOptions()
+    }
+
+    private fun setupTimer() {
+        var secondLeft = 0
+        timer.onTick = {millisUntilFinished ->
+            val second = (millisUntilFinished / 1000.0f).roundToInt()
+            if (second != secondLeft) {
+                secondLeft = second
+                totalPlayTime++
+                Log.i("totalPlayTime", totalPlayTime.toString())
+                progressBar.progress = secondLeft
+            }
+        }
+        timer.onFinish = {
+            handleTimeUp()
+        }
+        progressBar.max = progressTime.toInt()
+        progressBar.progress = progressTime.toInt()
+        timer.startTimer()
+    }
+
+    private fun handleTimeUp() {
+        //TODO handle lose
+        handleEndGame(this, score, totalPlayTime)
     }
 
     private fun generateOptions(){

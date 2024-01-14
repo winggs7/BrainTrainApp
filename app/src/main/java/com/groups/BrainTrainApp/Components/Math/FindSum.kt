@@ -7,13 +7,16 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.Observer
 import com.google.android.flexbox.FlexboxLayout
 import com.groups.BrainTrainApp.Components.Attention.FindPairs.MAX_ROUND
 import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Components.Common.Timer
+import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.handleEndGame
 import kotlin.math.roundToInt
@@ -21,9 +24,12 @@ import kotlin.random.Random
 
 
 class FindSum : AppCompatActivity() {
+    private val viewModel: LevelViewModel by viewModels()
+
     private lateinit var answerLayout: FlexboxLayout
     private lateinit var progressBar: ProgressBar
     private lateinit var btnBack: AppCompatButton
+    private lateinit var question: TextView
     private lateinit var stageTxt: TextView
     private lateinit var scoreTxt: TextView
     private var chosenCheckBoxId = mutableListOf<Int>()
@@ -35,26 +41,42 @@ class FindSum : AppCompatActivity() {
     private val clockTime = (countDownTime*1000).toLong()
     private val progressTime = (clockTime / 1000).toFloat()
     var totalPlayTime: Int = 0
-    private var sum = 100
+    private var sumTemp = 10
+    private var sum = 0
     private var stage = 1
     private var score = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_sum)
+
+        viewModel.selectedLevel.observe(this, Observer { level ->
+            //TODO handle game's difficulty
+            when (level) {
+                Level.EASY -> {
+                    sumTemp = 10
+                }
+                Level.NORMAL -> {
+                    sumTemp = 100
+                }
+                else -> {
+                    sumTemp = 1000
+                }
+            }
+            supportFragmentManager.beginTransaction().remove(supportFragmentManager.findFragmentById(R.id.level_container)!!).commit()
+            init()
+        })
         btnBack = findViewById(R.id.button_back)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
             intent.putExtra("type", GameType.MATH.toString())
             startActivity(intent)
         }
+        question = findViewById(R.id.question)
         progressBar = findViewById(R.id.progress_bar)
         answerLayout = findViewById(R.id.answer_layout)
         stageTxt = findViewById(R.id.question_number)
         scoreTxt = findViewById(R.id.score_txt)
-        options.addAll((sum/10..sum/2).toList())
-        options.addAll((sum/2..sum-sum/10).toList())
         timer = object : Timer(clockTime, 1000) {}
-        init()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -90,8 +112,10 @@ class FindSum : AppCompatActivity() {
         if (stage > 15) {
             handleTimeUp()
         } else {
+            question.setText("Hai số nào dưới đây có tổng bằng ${sumTemp}?")
             stageTxt.setText("Câu hỏi: ${stage}")
             scoreTxt.setText("Điểm số: ${score}")
+            setupTimer()
             generateOptions()
             setCheckBoxs()
             drawCheckBox()
@@ -130,6 +154,7 @@ class FindSum : AppCompatActivity() {
         }
     }
 
+
     private fun attachListener(cb: CheckBox){
         cb.setOnClickListener {
             var number = Integer.parseInt(cb.text.toString())
@@ -142,7 +167,7 @@ class FindSum : AppCompatActivity() {
                 sum += number
                 setBackgroundCheckbox(cb, R.color.grey, R.drawable.rounded_checkbox, R.drawable.checkbox_empty)
                 chosenCheckBoxId.remove(cbId)
-            } else{
+            } else {
                 sum -= number
                 if (sum == 0){
                     if(stage < 6){
@@ -162,7 +187,6 @@ class FindSum : AppCompatActivity() {
 //                    progressBar.progress = progressTime.toInt()
 //                    timer.restartTimer()
 //                    timer.startTimer()
-                    setupTimer()
                     resetGame()
                 }, 2000)
             }
@@ -203,11 +227,13 @@ class FindSum : AppCompatActivity() {
     }
 
     private fun generateOptions(){
-        sum = 100
+        sum = sumTemp
         var index = 0
         var position = 0
         var value1 = 0
         var value2 = 0
+        options.addAll((sum/10..sum/2).toList())
+        options.addAll((sum/2..sum-sum/10).toList())
         var cloneOptions = options.toMutableList()
         if(stage == 6 || stage == 10){
             addCheckBox()

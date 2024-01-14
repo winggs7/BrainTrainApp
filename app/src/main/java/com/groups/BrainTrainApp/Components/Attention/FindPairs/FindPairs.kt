@@ -12,29 +12,35 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Components.Common.Timer
-import com.groups.BrainTrainApp.Datas.easyImages
+import com.groups.BrainTrainApp.Datas.easyAnimalImages
+import com.groups.BrainTrainApp.Datas.hardFlowerImages
+import com.groups.BrainTrainApp.Datas.normalFoodImages
 import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.borderView
 import com.groups.BrainTrainApp.Utils.drawButton
 import com.groups.BrainTrainApp.Utils.handleEndGame
-import com.groups.BrainTrainApp.Utils.handleProgressBar
 import com.groups.BrainTrainApp.Utils.removeBorder
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 
 class FindPairs : AppCompatActivity() {
+    private val viewModel: LevelViewModel by viewModels()
     lateinit var container: LinearLayout
-    lateinit var imageList: Array<Int>
     lateinit var scoreView: TextView
     lateinit var btnBack: AppCompatButton
+    var imageList: Array<Int> = easyAnimalImages
     var buttonList: MutableList<ButtonCustom> = mutableListOf()
     var chosenList: MutableList<ButtonCustom> = mutableListOf()
 
@@ -61,7 +67,27 @@ class FindPairs : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_pairs)
+
+        viewModel.selectedLevel.observe(this, Observer { level ->
+            imageList = when (level) {
+                Level.EASY -> {
+                    easyAnimalImages
+                }
+
+                Level.NORMAL -> {
+                    normalFoodImages
+                }
+
+                else -> {
+                    hardFlowerImages
+                }
+            }
+            supportFragmentManager.beginTransaction().remove(supportFragmentManager.findFragmentById(R.id.level_container)!!).commit()
+            resetGame()
+        })
+
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
+
         btnBack = findViewById(R.id.btnback)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
@@ -75,12 +101,13 @@ class FindPairs : AppCompatActivity() {
 
         container = findViewById(R.id.find_pair_container)
         scoreView = findViewById(R.id.score_view)
-        imageList = easyImages
+
         setupTimer()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
+
         if(hasFocus) {
             resetGame()
         }
@@ -111,6 +138,7 @@ class FindPairs : AppCompatActivity() {
                 totalPlayTime++
 
                 Log.i("totalPlayTime", totalPlayTime.toString())
+
                 progressBar.progress = secondLeft
             }
         }
@@ -123,10 +151,6 @@ class FindPairs : AppCompatActivity() {
         timer.startTimer()
     }
 
-    private fun timerFormat(secondLeft: Int, timeTxt: TextView) {
-        progressBar.progress = secondLeft
-    }
-
     private fun onBackPressedMethod() {
         timer.destroyTimer()
         finish()
@@ -136,6 +160,16 @@ class FindPairs : AppCompatActivity() {
         if (currentRound > MAX_ROUND) {
             handleTimeUp()
         }
+
+        Log.i("currentRound", currentRound.toString())
+
+        correctNum = 0
+        buttonList = mutableListOf()
+
+        //restart timer
+        progressBar.progress = progressTime.toInt()
+        timer.restartTimer()
+        timer.startTimer()
 
         val randomList = handleRandomImage(imageList)
         for (i in randomList.indices) {
@@ -152,6 +186,7 @@ class FindPairs : AppCompatActivity() {
 
     private fun addPairs(image: Int) {
         val newButton = ButtonCustom(this)
+
         newButton.setBackgroundResource(image)
         newButton.backgroundResourceId = image
         newButton.setOnClickListener {
@@ -203,14 +238,16 @@ class FindPairs : AppCompatActivity() {
             }
 
             if (correctNum == currentRound + 2) {
-                currentRound++
-                correctNum = 0
-                buttonList = mutableListOf()
 
-                //restart timer
-                progressBar.progress = progressTime.toInt()
-                timer.restartTimer()
-                timer.startTimer()
+//                correctNum = 0
+//                buttonList = mutableListOf()
+//
+//                //restart timer
+//                progressBar.progress = progressTime.toInt()
+//                timer.restartTimer()
+//                timer.startTimer()
+
+                currentRound++
 
                 Handler(Looper.getMainLooper()).postDelayed({
                     resetGame()

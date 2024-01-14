@@ -7,12 +7,16 @@ import android.os.Handler
 import android.os.Looper
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
+import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.disableAllButton
 import com.groups.BrainTrainApp.Utils.drawButton
+import com.groups.BrainTrainApp.Utils.handleEndGame
 
 class RememberColor : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
@@ -22,13 +26,26 @@ class RememberColor : AppCompatActivity() {
     var numCol = 2
     var playercount = 0
     var lvFlag: Boolean = false
+    private lateinit var timer: Timer
+    private val clockTime = (9999*1000).toLong()
+    var totalPlayTime: Int = 0
+    var score = 0
     private var handler: Handler = Handler(Looper.getMainLooper())
+
+    private val onBackPressedCallBack= object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            onBackPressedMethod()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_new_image)
+        timer = object : Timer(clockTime, 1000) {}
         btnBack = findViewById<Button>(R.id.btnback)
         btnBack.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, GameSelected::class.java)
+            intent.putExtra("type", GameType.MEMORY.toString())
+            startActivity(intent)
         }
         totalLayout = findViewById(R.id.totalLayout)
         addButton()
@@ -36,6 +53,7 @@ class RememberColor : AppCompatActivity() {
         addButton()
         addButton()
         nextLv()
+        setupTimer()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -62,6 +80,7 @@ class RememberColor : AppCompatActivity() {
             clickedButton.isEnabled = false
             clickedButton.setBackgroundColor(Color.BLUE)
             playercount++
+            score+=100
             if (playercount == count) {
                 disableAllButton(buttonList)
                 playercount = 0
@@ -74,6 +93,7 @@ class RememberColor : AppCompatActivity() {
         } else {
             clickedButton.setBackgroundColor(Color.RED)
             appearColor()
+            handleEndGame(this,score,totalPlayTime)
             disableAllButton(buttonList)
         }
     }
@@ -113,5 +133,31 @@ class RememberColor : AppCompatActivity() {
         handler.postDelayed({
             clearColor()
         }, 3000)
+    }
+
+    private fun setupTimer() {
+
+        timer.onTick = { millisUntilFinished ->
+            totalPlayTime++
+        }
+        timer.startTimer()
+    }
+    override fun onPause() {
+        super.onPause()
+        timer.pauseTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        timer.resumeTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.destroyTimer()
+    }
+    private fun onBackPressedMethod() {
+        timer.destroyTimer()
+        finish()
     }
 }
