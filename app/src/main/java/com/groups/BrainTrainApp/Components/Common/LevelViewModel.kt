@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import com.groups.BrainTrainApp.Enum.Level
 
 class LevelViewModel: ViewModel(){
-    private val mutableSelectedItem = MutableLiveData<Level>()
-    val selectedItem: LiveData<Level> get() = mutableSelectedItem
-    fun selectItem(item: Level) {
-        mutableSelectedItem.value = item
+    private val mutableSelectedLevel = MutableLiveData<Level>()
+    val selectedLevel: LiveData<Level> get() = mutableSelectedLevel
+    fun selectLevel(level: Level) {
+        mutableSelectedLevel.value = level
     }
 }

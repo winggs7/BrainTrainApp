@@ -9,10 +9,14 @@ import android.os.Looper
 import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.Observer
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
+import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Datas.easyMemoryImages
+import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.borderView
@@ -22,6 +26,8 @@ import com.groups.BrainTrainApp.Utils.enableAllButton
 
 
 class FindNewImage : AppCompatActivity() {
+    private val viewModel: LevelViewModel by viewModels()
+
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<ButtonCustom> = mutableListOf()
     lateinit var btnBack: AppCompatButton
@@ -31,6 +37,22 @@ class FindNewImage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_new_image)
+
+        viewModel.selectedLevel.observe(this, Observer { level ->
+            //TODO handle game's difficulty
+            when (level) {
+                Level.EASY -> {
+
+                }
+                Level.NORMAL -> {
+
+                }
+                else -> {
+
+                }
+            }
+        })
+
         btnBack = findViewById<AppCompatButton>(R.id.btnback)
         btnBack.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))

@@ -12,10 +12,13 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.lifecycle.Observer
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.Datas.easyImages
 import com.groups.BrainTrainApp.Enum.Level
@@ -31,6 +34,7 @@ import kotlin.math.roundToInt
 
 
 class FindPairs : AppCompatActivity() {
+    private val viewModel: LevelViewModel by viewModels()
     lateinit var container: LinearLayout
     lateinit var imageList: Array<Int>
     lateinit var scoreView: TextView
@@ -61,6 +65,21 @@ class FindPairs : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_pairs)
+
+        viewModel.selectedLevel.observe(this, Observer { level ->
+            //TODO handle game's difficulty
+            when (level) {
+                Level.EASY -> {
+
+                }
+                Level.NORMAL -> {
+
+                }
+                else -> {
+
+                }
+            }
+        })
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
 
