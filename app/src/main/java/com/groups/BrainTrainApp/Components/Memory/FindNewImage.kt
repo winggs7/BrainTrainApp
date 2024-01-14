@@ -10,6 +10,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Datas.easyMemoryImages
 import com.groups.BrainTrainApp.MainActivity
@@ -23,14 +24,14 @@ import com.groups.BrainTrainApp.Utils.enableAllButton
 class FindNewImage : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<ButtonCustom> = mutableListOf()
-    lateinit var btnBack: Button
+    lateinit var btnBack: AppCompatButton
     private var imageList: MutableList<Int> = mutableListOf()
     private var handler: Handler = Handler(Looper.getMainLooper())
     var count = 3
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_new_image)
-        btnBack = findViewById<Button>(R.id.btnback)
+        btnBack = findViewById<AppCompatButton>(R.id.btnback)
         btnBack.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
         }

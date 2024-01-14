@@ -35,7 +35,6 @@ class ButtonCustom : AppCompatButton  {
     }
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-
         val layoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
         layoutParams.setMargins(marginStart, marginTop, marginEnd, marginBottom)
         this.layoutParams = layoutParams

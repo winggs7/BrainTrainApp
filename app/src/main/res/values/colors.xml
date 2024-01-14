@@ -10,4 +10,11 @@
     <color name="ltblue">#85D2E4</color>
     <color name="ltgray">#596061</color>
     <color name="purple">#A122ED</color>
+    <color name="grey">#909090</color>
+    <color name="blue_grey">#8a93b2</color>
+    <color name="green_grey">#e9efe3</color>
+    <color name="red_grey">#f6e2e4</color>
+    <color name="light_red">#d64f42</color>
+    <color name="light_green">#4cae59</color>
+    <color name="dark_blue">#232c4b</color>
 </resources>
