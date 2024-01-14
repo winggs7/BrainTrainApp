@@ -16,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.groups.BrainTrainApp.Adapter.GameAdapter
 import com.groups.BrainTrainApp.Datas.attentionList
 import com.groups.BrainTrainApp.Datas.mainPageList
+import com.groups.BrainTrainApp.Datas.memoryList
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.Model.Game
 import com.groups.BrainTrainApp.R
@@ -43,10 +44,10 @@ class GameSelected : AppCompatActivity() {
         if (typeGame == GameType.ATTENTION) {
             renderGameViewPager(attentionList)
         } else if (typeGame == GameType.MEMORY) {
+            renderGameViewPager(memoryList)
+        } else if (typeGame == GameType.LANGUAGE) {
             //TODO
-        } else if (typeGame == GameType.MEMORY) {
-            //TODO
-        } else if (typeGame == GameType.MEMORY) {
+        } else if (typeGame == GameType.MATH) {
             //TODO
         }
         setUpTransformer()

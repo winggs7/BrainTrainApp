@@ -24,7 +24,7 @@ import com.groups.BrainTrainApp.Utils.borderView
 import com.groups.BrainTrainApp.Utils.drawButton
 import com.groups.BrainTrainApp.Utils.handleEndGame
 import com.groups.BrainTrainApp.Utils.handleProgressBar
-import com.groups.BrainTrainApp.Utils.removeBorderView
+import com.groups.BrainTrainApp.Utils.removeBorder
 import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
@@ -221,8 +221,8 @@ class FindPairs : AppCompatActivity() {
                 }, 500)
             }
         } else {
-            buttonList.map {
-                removeBorderView(it)
+            chosenList.map {
+                removeBorder(it)
             }
         }
     }

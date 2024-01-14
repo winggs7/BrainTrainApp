@@ -39,3 +39,17 @@ fun drawButton(context: Context, totalLayout: LinearLayout, buttonList: MutableL
 
     return totalLayout
 }
+
+fun disableAllButton(buttonList: MutableList<ButtonCustom>) {
+    for (i in buttonList.indices) {
+        val button = buttonList[i]
+        button.isEnabled = false
+    }
+}
+
+fun enableAllButton(buttonList: MutableList<ButtonCustom>) {
+    for (i in buttonList.indices) {
+        val button = buttonList[i]
+        button.isEnabled = true
+    }
+}

@@ -37,13 +37,16 @@
             android:name=".MotionLayout.CarouselActivity"
             android:exported="false" />
         <activity
-            android:name=".Memory.GameTest"
+            android:name=".Components.Memory.GameTest"
             android:exported="false" />
         <activity
-            android:name=".Memory.Memory_1"
+            android:name=".Components.Memory.FindNewImage"
             android:exported="false" />
         <activity
-            android:name=".Memory.Memory_2"
+            android:name=".Components.Memory.RememberColor"
+            android:exported="false" />
+        <activity
+            android:name=".Components.Memory.RememberImage"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

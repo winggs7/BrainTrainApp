@@ -8,4 +8,6 @@
     <color name="yellow_brown">#DDC600</color>
     <color name="blue">#0091B5</color>
     <color name="ltblue">#85D2E4</color>
+    <color name="ltgray">#596061</color>
+    <color name="purple">#A122ED</color>
 </resources>
