@@ -212,6 +212,7 @@ class FindPairs : AppCompatActivity() {
                 correctNum = 0
                 buttonList = mutableListOf()
 
+                //restart timer
                 progressBar.progress = progressTime.toInt()
                 timer.restartTimer()
                 timer.startTimer()
@@ -221,8 +222,10 @@ class FindPairs : AppCompatActivity() {
                 }, 500)
             }
         } else {
-            chosenList.map {
-                removeBorder(it)
+            buttonList.map {
+                if (chosenList.contains(it)) {
+                    removeBorder(it)
+                }
             }
         }
     }
