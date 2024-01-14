@@ -16,6 +16,7 @@ import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
+import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.Datas.easyMemoryImages
 import com.groups.BrainTrainApp.MainActivity
@@ -59,7 +60,9 @@ class RememberImage : AppCompatActivity() {
         setContentView(R.layout.activity_game_remeber_image)
         btnBack = findViewById(R.id.btnback)
         btnBack.setOnClickListener{
-            startActivity(Intent(this, MainActivity::class.java))
+            val intent = Intent(this, GameSelected::class.java)
+            intent.putExtra("type", GameType.MEMORY.toString())
+            startActivity(intent)
         }
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
         btnCheck = findViewById(R.id.btnCheck)
