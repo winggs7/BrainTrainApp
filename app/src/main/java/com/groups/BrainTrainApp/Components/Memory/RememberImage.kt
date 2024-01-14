@@ -15,6 +15,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Components.Common.Timer
@@ -44,7 +45,7 @@ class RememberImage : AppCompatActivity() {
     var lv = 0
     var numberOfButtonRemove = 1
     private lateinit var timer: Timer
-    private lateinit var btnBack: Button
+    private lateinit var btnBack: AppCompatButton
     private lateinit var btnCheck: Button
     private lateinit var scoreTextView: TextView
     private lateinit var attempTextView : TextView

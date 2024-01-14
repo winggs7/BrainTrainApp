@@ -13,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Components.Common.Timer
@@ -33,7 +34,7 @@ class FindPairs : AppCompatActivity() {
     lateinit var container: LinearLayout
     lateinit var imageList: Array<Int>
     lateinit var scoreView: TextView
-    lateinit var btnBack: Button
+    lateinit var btnBack: AppCompatButton
     var buttonList: MutableList<ButtonCustom> = mutableListOf()
     var chosenList: MutableList<ButtonCustom> = mutableListOf()
 
@@ -63,7 +64,7 @@ class FindPairs : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
 
-        btnBack = findViewById<Button>(R.id.btnback)
+        btnBack = findViewById(R.id.btnback)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
             intent.putExtra("type", GameType.ATTENTION.toString())

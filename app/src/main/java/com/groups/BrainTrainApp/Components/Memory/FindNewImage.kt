@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Components.Common.Timer
@@ -29,7 +30,7 @@ import kotlin.math.roundToInt
 class FindNewImage : AppCompatActivity() {
     private lateinit var totalLayout: LinearLayout
     private val buttonList: MutableList<ButtonCustom> = mutableListOf()
-    lateinit var btnBack: Button
+    lateinit var btnBack: AppCompatButton
     private lateinit var timer: Timer
     private val clockTime = (9999*1000).toLong()
     var totalPlayTime: Int = 0
@@ -45,8 +46,8 @@ class FindNewImage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_new_image)
+        btnBack = findViewById(R.id.btnback)
         timer = object : Timer(clockTime, 1000) {}
-        btnBack = findViewById<Button>(R.id.btnback)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
             intent.putExtra("type", GameType.MEMORY.toString())

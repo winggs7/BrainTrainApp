@@ -16,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.groups.BrainTrainApp.Adapter.GameAdapter
 import com.groups.BrainTrainApp.Datas.attentionList
 import com.groups.BrainTrainApp.Datas.mainPageList
+import com.groups.BrainTrainApp.Datas.mathList
 import com.groups.BrainTrainApp.Datas.memoryList
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.Model.Game
@@ -26,7 +27,6 @@ class GameSelected : AppCompatActivity() {
     private lateinit var viewPager2: ViewPager2
     private lateinit var handler: Handler
     private lateinit var gameAdapter: GameAdapter
-
     lateinit var btnHome: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,7 +48,7 @@ class GameSelected : AppCompatActivity() {
         } else if (typeGame == GameType.LANGUAGE) {
             //TODO
         } else if (typeGame == GameType.MATH) {
-            //TODO
+            renderGameViewPager(mathList)
         }
         setUpTransformer()
         viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
@@ -62,7 +62,6 @@ class GameSelected : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-
         handler.removeCallbacks(runnable)
     }
 
@@ -108,7 +107,6 @@ class GameSelected : AppCompatActivity() {
             val r = 1 - abs(position)
             page.scaleY = 0.85f + r * 0.25f
         }
-
         viewPager2.setPageTransformer(transformer)
     }
 }
