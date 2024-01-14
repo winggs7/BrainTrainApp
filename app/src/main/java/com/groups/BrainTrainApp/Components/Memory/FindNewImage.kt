@@ -1,13 +1,11 @@
 package com.groups.BrainTrainApp.Components.Memory
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.Button
 import android.widget.LinearLayout
 import androidx.activity.viewModels
 import androidx.activity.OnBackPressedCallback
@@ -18,10 +16,8 @@ import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.Components.Common.GameSelected
-import com.groups.BrainTrainApp.Datas.easyMemoryImages
+import com.groups.BrainTrainApp.Datas.normalFoodImages
 import com.groups.BrainTrainApp.Enum.Level
-import com.groups.BrainTrainApp.Datas.normalMemoryImages
-import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.borderView
 import com.groups.BrainTrainApp.Utils.disableAllButton
@@ -75,7 +71,7 @@ class FindNewImage : AppCompatActivity() {
             startActivity(intent)
         }
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
-        imageList.addAll(normalMemoryImages)
+        imageList.addAll(normalFoodImages)
         totalLayout = findViewById(R.id.totalLayout)
         addButton()
         addButton()
