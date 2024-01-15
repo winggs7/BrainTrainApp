@@ -47,9 +47,9 @@ val gameList: Map<GameType, ArrayList<Game>> = mapOf(
 )
 
 val languageList: ArrayList<Game> = arrayListOf(
-    Game("Find Word Game", R.drawable.brain, GameType.LANGUAGE, FindWordGameActivity::class.java),
-    Game("Conjunction Game", R.drawable.brain, GameType.LANGUAGE, ConjunctionGameActivity::class.java),
-    Game("Sorting Characters", R.drawable.brain, GameType.LANGUAGE, SortingCharGameActivity::class.java),
-    Game("Complete Word Game", R.drawable.brain, GameType.LANGUAGE, CompleteWordGameActivity::class.java),
+    Game("Find Word Game", R.drawable.language_bg_1, GameType.LANGUAGE, FindWordGameActivity::class.java),
+    Game("Conjunction Game", R.drawable.language_bg_2, GameType.LANGUAGE, ConjunctionGameActivity::class.java),
+    Game("Sorting Characters", R.drawable.language_bg_3, GameType.LANGUAGE, SortingCharGameActivity::class.java),
+    Game("Complete Word Game", R.drawable.language_bg_4, GameType.LANGUAGE, CompleteWordGameActivity::class.java),
 )
 

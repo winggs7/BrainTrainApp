@@ -168,6 +168,7 @@ class FindDifferences : AppCompatActivity() {
         Log.i("currentImage", currentImage!!.get("x").toString())
 
         if(arrayImage.isNotEmpty() && allImageList.size == arrayImage.size) {
+            handleTimeUp()
             return
         }
 
