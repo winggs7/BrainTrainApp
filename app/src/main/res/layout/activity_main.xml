@@ -32,7 +32,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/df_1"
+                    android:background="@drawable/brain"
                     android:src="@drawable/border" />
             </androidx.cardview.widget.CardView>
 
@@ -40,7 +40,7 @@
                 android:id="@+id/user_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="ChienDauBuoi"
+                android:text="User"
                 android:textSize="16dp"
                 android:gravity="center_vertical"
                 android:layout_marginLeft="10dp"

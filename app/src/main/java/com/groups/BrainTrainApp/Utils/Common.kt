@@ -2,6 +2,8 @@ package com.groups.BrainTrainApp.Utils
 
 import android.content.Context
 import android.content.Intent
+import com.groups.BrainTrainApp.Components.Common.GameEnd
+import com.groups.BrainTrainApp.Model.Game
 import java.util.Locale
 
 fun getResourceId(context: Context, name: String): Int {

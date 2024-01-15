@@ -1,5 +1,6 @@
 package com.groups.BrainTrainApp.Components.Attention.Language;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
+
+import com.groups.BrainTrainApp.Components.Common.GameSelected;
 import com.groups.BrainTrainApp.R;
 
 import java.io.BufferedReader;
@@ -47,6 +50,7 @@ public class CompleteWordGameActivity extends AppCompatActivity {
         tryAgainButton = findViewById(R.id.tryAgainButton);
         submitCompleteWordButton = findViewById(R.id.submitCompleteWordButton);
         txtCompleteWordError = findViewById(R.id.txtCompleteWordError);
+
         wordFound = "";
         gameStart();
     }
