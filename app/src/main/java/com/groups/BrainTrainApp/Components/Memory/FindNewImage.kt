@@ -11,11 +11,14 @@ import androidx.activity.viewModels
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.view.marginLeft
 import androidx.lifecycle.Observer
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Datas.easyAnimalImages
+import com.groups.BrainTrainApp.Datas.hardFlowerImages
 import com.groups.BrainTrainApp.Datas.normalFoodImages
 import com.groups.BrainTrainApp.Enum.Level
 import com.groups.BrainTrainApp.R
@@ -53,15 +56,19 @@ class FindNewImage : AppCompatActivity() {
             //TODO handle game's difficulty
             when (level) {
                 Level.EASY -> {
-
+                    imageList.addAll(easyAnimalImages)
                 }
                 Level.NORMAL -> {
-
+                    imageList.addAll(normalFoodImages)
                 }
                 else -> {
-
+                    imageList.addAll(hardFlowerImages)
                 }
             }
+            supportFragmentManager.beginTransaction()
+                .remove(supportFragmentManager.findFragmentById(R.id.level_container)!!).commit()
+            init()
+            setupTimer()
         })
         timer = object : Timer(clockTime, 1000) {}
         btnBack = findViewById<AppCompatButton>(R.id.btnback)
@@ -71,12 +78,15 @@ class FindNewImage : AppCompatActivity() {
             startActivity(intent)
         }
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
-        imageList.addAll(normalFoodImages)
+
         totalLayout = findViewById(R.id.totalLayout)
+
+    }
+
+    fun init(){
         addButton()
         addButton()
         addButton()
-        setupTimer()
     }
 
     fun getRandomImage(): Int {
@@ -96,12 +106,14 @@ class FindNewImage : AppCompatActivity() {
     }
 
     private fun addButton() {
-        val newButton = ButtonCustom(this)
+        val newButton = ButtonCustom(this,true)
       //  newButton.text = "${buttonList.size}"
         loadImageIntoButton(newButton)
         newButton.setOnClickListener {
             chosenButton(newButton)
         }
+
+
         buttonList.add(newButton)
         buttonList.shuffle()
         drawButton(this,totalLayout,buttonList,count)

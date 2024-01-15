@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.LevelViewModel
 import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.Datas.easyAnimalImages
 import com.groups.BrainTrainApp.MainActivity
@@ -30,8 +31,14 @@ import com.groups.BrainTrainApp.Utils.handleEndGame
 import com.groups.BrainTrainApp.Utils.removeBorder
 import java.util.Locale
 import kotlin.math.roundToInt
+import androidx.activity.viewModels
+import androidx.lifecycle.Observer
+import com.groups.BrainTrainApp.Datas.hardFlowerImages
+import com.groups.BrainTrainApp.Datas.normalFoodImages
+import com.groups.BrainTrainApp.Enum.Level
 
 class RememberImage : AppCompatActivity() {
+    private val viewModel: LevelViewModel by viewModels()
     private lateinit var answerLayout: LinearLayout
     private lateinit var questionLayout: LinearLayout
     private val buttonListQuestion: MutableList<ButtonCustom> = mutableListOf()
@@ -59,6 +66,24 @@ class RememberImage : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_remeber_image)
+        viewModel.selectedLevel.observe(this, Observer { level ->
+            //TODO handle game's difficulty
+            when (level) {
+                Level.EASY -> {
+                    imageList.addAll(easyAnimalImages)
+                }
+                Level.NORMAL -> {
+                    imageList.addAll(normalFoodImages)
+                }
+                else -> {
+                    imageList.addAll(hardFlowerImages)
+                }
+            }
+            supportFragmentManager.beginTransaction()
+                .remove(supportFragmentManager.findFragmentById(R.id.level_container)!!).commit()
+            init()
+            startNextLv()
+        })
         btnBack = findViewById(R.id.btnback)
         btnBack.setOnClickListener{
             val intent = Intent(this, GameSelected::class.java)
@@ -79,9 +104,11 @@ class RememberImage : AppCompatActivity() {
         attempTextView= layoutAttemp.findViewById(R.id.textAttemptPoint)
         timer = object : Timer(clockTime, 1000) {}
         progressBar = findViewById(R.id.progress_bar)
-        imageList.addAll(easyAnimalImages)
         questionLayout = findViewById(R.id.questionLayout)
         answerLayout = findViewById(R.id.answerLayout)
+
+    }
+    fun init(){
         addButton(buttonListQuestion,4,questionLayout,false)
         addButton(buttonListQuestion,4,questionLayout,false)
         addButton(buttonListQuestion,4,questionLayout,false)
@@ -101,15 +128,15 @@ class RememberImage : AppCompatActivity() {
         targetButton.setBackgroundResource(a)
     }
 
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        if (hasFocus) {
-            startNextLv()
-        }
-    }
+//    override fun onWindowFocusChanged(hasFocus: Boolean) {
+//        super.onWindowFocusChanged(hasFocus)
+//        if (hasFocus) {
+//            drawButton(this,questionLayout,buttonListQuestion,4)
+//        }
+//    }
 
     private fun addButton(buttonList: MutableList<ButtonCustom>, count: Int, layout: LinearLayout, clickAble: Boolean) {
-        val newButton = ButtonCustom(this)
+        val newButton = ButtonCustom(this,true)
         //  newButton.text = "${buttonList.size}"
         loadImageIntoButton(newButton)
         if(clickAble) {
@@ -130,7 +157,7 @@ class RememberImage : AppCompatActivity() {
                buttonListAnswer[i].background = answerButtonImage
             }
             buttonListAnswer[i].isMark = true
-            buttonListQuestion[i].setBackgroundColor(Color.YELLOW)
+            buttonListQuestion[i].setBackgroundResource(R.drawable.question_mark)
         }
         buttonListAnswer.shuffle()
         buttonListQuestion.shuffle()

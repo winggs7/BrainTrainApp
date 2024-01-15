@@ -40,6 +40,8 @@ class RememberColor : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game_find_new_image)
+        supportFragmentManager.beginTransaction()
+            .remove(supportFragmentManager.findFragmentById(R.id.level_container)!!).commit()
         timer = object : Timer(clockTime, 1000) {}
         btnBack = findViewById<Button>(R.id.btnback)
         btnBack.setOnClickListener {
@@ -64,7 +66,7 @@ class RememberColor : AppCompatActivity() {
     }
 
     private fun addButton() {
-        val newButton = ButtonCustom(this)
+        val newButton = ButtonCustom(this,true)
         newButton.setOnClickListener {
             chosenButton(newButton)
         }
