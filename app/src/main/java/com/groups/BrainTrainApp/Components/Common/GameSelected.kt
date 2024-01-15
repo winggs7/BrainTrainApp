@@ -48,9 +48,8 @@ class GameSelected : AppCompatActivity() {
             renderGameViewPager(languageList)
         } else if (typeGame == GameType.MEMORY) {
             renderGameViewPager(memoryList)
-        } else if (typeGame == GameType.MEMORY) {
+        } else if (typeGame == GameType.MATH) {
            renderGameViewPager(mathList)
-
         }
         setUpTransformer()
         viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {
