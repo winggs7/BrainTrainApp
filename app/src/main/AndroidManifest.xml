@@ -21,9 +21,7 @@
         <activity
             android:name=".Components.Common.GameSelected"
             android:exported="false" />
-        <activity
-            android:name=".Components.Common.ChooseGame"
-            android:exported="false" />
+
         <activity
             android:name=".Components.Attention.Ship.Ship"
             android:exported="false" />
@@ -34,8 +32,18 @@
             android:name=".Components.Attention.FindDifferences.FindDifferences"
             android:exported="false" />
         <activity
-            android:name=".MotionLayout.CarouselActivity"
-            android:exported="false" />
+                android:name=".Components.Attention.Language.CompleteWordGameActivity"
+                android:exported="false" />
+        <activity
+                android:name=".Components.Attention.Language.FindWordGameActivity"
+                android:exported="false" />
+        <activity
+                android:name=".Components.Attention.Language.SortingCharGameActivity"
+                android:exported="false" />
+        <activity
+                android:name=".Components.Attention.Language.ConjunctionGameActivity"
+                android:exported="false" />
+
         <activity
             android:name=".Components.Memory.GameTest"
             android:exported="false" />

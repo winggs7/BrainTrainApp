@@ -15,6 +15,7 @@ import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.groups.BrainTrainApp.Adapter.GameAdapter
 import com.groups.BrainTrainApp.Datas.attentionList
+import com.groups.BrainTrainApp.Datas.languageList
 import com.groups.BrainTrainApp.Datas.mainPageList
 import com.groups.BrainTrainApp.Datas.mathList
 import com.groups.BrainTrainApp.Datas.memoryList
@@ -43,12 +44,13 @@ class GameSelected : AppCompatActivity() {
         val typeGame : GameType = enumValueOf(type!!)
         if (typeGame == GameType.ATTENTION) {
             renderGameViewPager(attentionList)
+        } else if (typeGame == GameType.LANGUAGE) {
+            renderGameViewPager(languageList)
         } else if (typeGame == GameType.MEMORY) {
             renderGameViewPager(memoryList)
-        } else if (typeGame == GameType.LANGUAGE) {
-            //TODO
-        } else if (typeGame == GameType.MATH) {
-            renderGameViewPager(mathList)
+        } else if (typeGame == GameType.MEMORY) {
+           renderGameViewPager(mathList)
+
         }
         setUpTransformer()
         viewPager2.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback() {

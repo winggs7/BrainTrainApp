@@ -3,6 +3,11 @@ package com.groups.BrainTrainApp.Datas
 import GameType
 import com.groups.BrainTrainApp.Components.Attention.FindDifferences.FindDifferences
 import com.groups.BrainTrainApp.Components.Attention.FindPairs.FindPairs
+import com.groups.BrainTrainApp.Components.Attention.Language.CompleteWordGameActivity
+import com.groups.BrainTrainApp.Components.Attention.Language.ConjunctionGameActivity
+import com.groups.BrainTrainApp.Components.Attention.Language.FindWordGameActivity
+import com.groups.BrainTrainApp.Components.Attention.Language.LanguageActivity
+import com.groups.BrainTrainApp.Components.Attention.Language.SortingCharGameActivity
 import com.groups.BrainTrainApp.Components.Attention.Ship.Ship
 import com.groups.BrainTrainApp.Components.Math.FindSmaller
 import com.groups.BrainTrainApp.Components.Math.FindSum
@@ -39,5 +44,12 @@ val mathList: ArrayList<Game> = arrayListOf (
 
 val gameList: Map<GameType, ArrayList<Game>> = mapOf(
     GameType.ATTENTION to attentionList,
+)
+
+val languageList: ArrayList<Game> = arrayListOf(
+    Game("Find Word Game", R.drawable.brain, GameType.LANGUAGE, FindWordGameActivity::class.java),
+    Game("Conjunction Game", R.drawable.brain, GameType.LANGUAGE, ConjunctionGameActivity::class.java),
+    Game("Sorting Characters", R.drawable.brain, GameType.LANGUAGE, SortingCharGameActivity::class.java),
+    Game("Complete Word Game", R.drawable.brain, GameType.LANGUAGE, CompleteWordGameActivity::class.java),
 )
 
