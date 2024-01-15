@@ -8,12 +8,17 @@
     <color name="yellow_brown">#DDC600</color>
     <color name="blue">#0091B5</color>
     <color name="ltblue">#85D2E4</color>
-
-
+    <color name="ltgray">#596061</color>
+    <color name="purple">#A122ED</color>
+    <color name="grey">#909090</color>
+    <color name="blue_grey">#8a93b2</color>
+    <color name="green_grey">#e9efe3</color>
+    <color name="red_grey">#f6e2e4</color>
+    <color name="light_red">#d64f42</color>
+    <color name="light_green">#4cae59</color>
+    <color name="dark_blue">#232c4b</color>
     <color name="app_color_default">#3a378e</color>
     <color name="background_color">#f3f6ff</color>
-
-    <!-- App main color. -->
     <color name="navy_blue_color">#344D67</color>
     <color name="mint_green_color">#6ECCAF</color>
     <color name="celadon_color">#ADE792</color>
@@ -22,8 +27,8 @@
     <color name="blue_color">#3057b4</color>
     <color name="grass_green_color">#6f9b68</color>
     <color name="golden_yellow_laminate_color">#ffb665</color>
-
     <color name="pastel_orange_color">#ff9450</color>
     <color name="very_dark_blue">#171336</color>
     <color name="orange_background">#FFFAF7</color>
+  
 </resources>

@@ -1,86 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/parentLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:background="@drawable/border_bottom"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/linearLayout"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toTopOf="parent">
+            android:background="@drawable/border_bottom"
+            android:padding="16dp">
 
-            <Button
-                android:id="@+id/btnback"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Back"
-                android:textSize="30sp" />
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:layout_width="164dp"
-                android:layout_height="wrap_content"
-                android:gravity="end"
-                android:text="Score: "
-                android:textSize="30dp" />
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnback"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/back_button"
+                    android:backgroundTint="@color/black" />
 
-            <TextView
-                android:id="@+id/score_view"
-                android:layout_width="89dp"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textSize="30dp" />
+                <TextView
+                    android:id="@+id/level_view"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="Level: Easy"
+                    android:textSize="22dp" />
 
-        </LinearLayout>
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="Score: "
+                    android:textSize="22dp" />
+
+                <TextView
+                    android:id="@+id/score_view"
+                    android:layout_width="89dp"
+                    android:layout_height="wrap_content"
+                    android:text="0000"
+                    android:textSize="22dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/progress_bar_container"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+                <ProgressBar
+                    android:id="@+id/progress_bar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:indeterminate="false"
+                    android:progress="100"
+                    android:progressDrawable="@drawable/progress_bar" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <LinearLayout
-            android:id="@+id/progress_bar_container"
+            android:id="@+id/find_pair_container"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            android:layout_height="0dp"
+            android:layout_margin="16dp"
+            android:layout_weight="8"
+            android:gravity="center"
+            android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:indeterminate="false"
-                android:progress="100"
-                android:progressDrawable="@drawable/progress_bar" />
+            <com.groups.BrainTrainApp.Components.Common.ButtonCustom
+                android:layout_width="150dp"
+                android:layout_height="150dp" />
         </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <LinearLayout
-        android:id="@+id/find_pair_container"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="8"
-        android:layout_margin="16dp"
-        android:orientation="vertical"
-        android:gravity="center">
-        <com.groups.BrainTrainApp.Components.Common.ButtonCustom
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            />
     </LinearLayout>
 
-</LinearLayout>
+    <fragment
+        android:id="@+id/level_container"
+        android:name="com.groups.BrainTrainApp.Components.Common.LevelSelected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -45,20 +45,28 @@
                 android:exported="false" />
 
         <activity
-            android:name=".Memory.GameTest"
+            android:name=".Components.Memory.GameTest"
             android:exported="false" />
         <activity
-            android:name=".Memory.Memory_1"
+            android:name=".Components.Math.FindSum"
             android:exported="false" />
         <activity
-            android:name=".Memory.Memory_2"
+            android:name=".Components.Math.FindSmaller"
+            android:exported="false" />
+        <activity
+            android:name=".Components.Memory.FindNewImage"
+            android:exported="false" />
+        <activity
+            android:name=".Components.Memory.RememberColor"
+            android:exported="false" />
+        <activity
+            android:name=".Components.Memory.RememberImage"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

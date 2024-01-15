@@ -13,12 +13,8 @@ import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import com.groups.BrainTrainApp.Adapter.GameAdapter
-import com.groups.BrainTrainApp.Components.Common.GameEnd
 import com.groups.BrainTrainApp.Components.Common.GameSelected
 import com.groups.BrainTrainApp.Datas.mainPageList
-import com.groups.BrainTrainApp.Components.Attention.FindPairs.FindPairs
-import com.groups.BrainTrainApp.Memory.Memory_1
-import com.groups.BrainTrainApp.Memory.Memory_2
 import com.groups.BrainTrainApp.Model.Game
 import kotlin.math.abs
 
@@ -40,20 +36,17 @@ class MainActivity : AppCompatActivity() {
                 handler.postDelayed(runnable, 5000)
             }
         })
-
 //        val intent = Intent(this, Memory_1::class.java)
 //        startActivity(intent)
     }
 
     override fun onPause() {
         super.onPause()
-
         handler.removeCallbacks(runnable)
     }
 
     override fun onResume() {
         super.onResume()
-
         handler.postDelayed(runnable, 5000)
     }
 
