@@ -27,7 +27,8 @@
                 android:id="@+id/main_game_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/brain">
+                android:src="@drawable/brain"
+                android:padding="30dp">
 
             </com.google.android.material.imageview.ShapeableImageView>
         </RelativeLayout>
@@ -39,8 +40,8 @@
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/title_game_image"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:src="@drawable/brain"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp">

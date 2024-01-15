@@ -1,11 +1,13 @@
 package com.groups.BrainTrainApp.Components.Attention.Ship
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.GridLayout
 import android.widget.ImageView
@@ -13,13 +15,19 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.GameSelected
+import com.groups.BrainTrainApp.Components.Common.Timer
 import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
+import com.groups.BrainTrainApp.Utils.borderView
+import com.groups.BrainTrainApp.Utils.handleEndGame
 import com.groups.BrainTrainApp.Utils.handleProgressBar
+import com.groups.BrainTrainApp.Utils.removeBorder
+import kotlin.math.roundToInt
 import kotlin.random.Random
 
 class Ship : AppCompatActivity() {
@@ -48,13 +56,28 @@ class Ship : AppCompatActivity() {
     var randomShipCol: Array<Int> = arrayOf()
     var randomShipRow: Array<Int> = arrayOf()
 
-    var time = 20
+//    var time = 20
+//    lateinit var progressBar: ProgressBar
+//    lateinit var progressText: TextView
+
+    //TODO declare attributes for timer
+    var totalPlayTime: Int = 0
     lateinit var progressBar: ProgressBar
-    lateinit var progressText: TextView
+    private val countDownTime = 20 //second
+    private val clockTime = (countDownTime * 1000).toLong()
+    private val progressTime = (clockTime / 1000).toFloat()
+    private lateinit var timer: Timer
+    private val onBackPressedCallBack = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            onBackPressedMethod()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ship)
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
 
         parentLayout = findViewById(R.id.parentLayout)
         spawnShark = findViewById(R.id.shark_spawn)
@@ -72,8 +95,10 @@ class Ship : AppCompatActivity() {
         scoreView.text = totalScore.toString()
 
         progressBar = findViewById(R.id.progress_bar)
-        progressText = findViewById(R.id.progress_count)
-        progressText.text = time.toString() + "s"
+//        progressText = findViewById(R.id.progress_count)
+//        progressText.text = time.toString() + "s"
+
+        setupTimer()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -89,8 +114,55 @@ class Ship : AppCompatActivity() {
             for (i in 0..<sharkNum) {
                 drawShark(i)
             }
-            handleProgressBar(progressBar, progressText, time, ::handleTimeUp)
+
+            //restart timer
+            progressBar.progress = progressTime.toInt()
+            timer.restartTimer()
+            timer.startTimer()
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        timer.pauseTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        timer.resumeTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        timer.destroyTimer()
+    }
+
+    private fun setupTimer() {
+        var secondLeft = 0
+        timer = object : Timer(clockTime, 1000) {}
+        timer.onTick = { millisUntilFinished ->
+            val second = (millisUntilFinished / 1000.0f).roundToInt()
+            if (second != secondLeft) {
+                secondLeft = second
+                totalPlayTime++
+
+                Log.i("totalPlayTime", totalPlayTime.toString())
+
+                progressBar.progress = secondLeft
+            }
+        }
+        timer.onFinish = {
+            Log.i("onFinish", "onFinish")
+            handleTimeUp()
+        }
+        progressBar.max = progressTime.toInt()
+        progressBar.progress = progressTime.toInt()
+        timer.startTimer()
+    }
+
+    private fun onBackPressedMethod() {
+        timer.destroyTimer()
+        finish()
     }
 
     private fun drawButton() {
@@ -154,7 +226,7 @@ class Ship : AppCompatActivity() {
         randomShipCol = arrayOf()
         randomShipRow = arrayOf()
 
-        totalScore = pointPerShip*3
+        totalScore = pointPerShip * 3
         scoreView.text = totalScore.toString()
         container.removeAllViews()
         spawnShark.removeAllViews()
@@ -205,9 +277,11 @@ class Ship : AppCompatActivity() {
 
         //TODO add border
 //        button.setImageResource(R.drawable.border)
+        borderView(button, Color.BLUE)
         Handler(Looper.getMainLooper()).postDelayed({
             //TODO remove background
 //            button.setImageResource(R.drawable.border_none)
+            removeBorder(button)
             button.isChoose = false
         }, 1000)
     }
@@ -273,11 +347,6 @@ class Ship : AppCompatActivity() {
     }
 
     private fun handleTimeUp() {
-        //TODO handle lose
-        val text = "Timeup!"
-        val duration = Toast.LENGTH_SHORT
-
-        val toast = Toast.makeText(this, text, duration)
-        toast.show()
+        handleEndGame(this, totalScore, totalPlayTime)
     }
 }

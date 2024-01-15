@@ -11,10 +11,10 @@ class ButtonCustom : AppCompatButton  {
     var isChoose: Boolean = false
     var isMark: Boolean = false
     var backgroundResourceId: Int? = null
-    var marginStart: Int = 10
-    var marginTop: Int = 10
-    var marginEnd: Int = 10
-    var marginBottom: Int = 10
+    var marginStart: Int = 0
+    var marginTop: Int = 0
+    var marginEnd: Int = 0
+    var marginBottom: Int = 0
     constructor(context: Context) : super(context) {
 
         init()
@@ -33,12 +33,12 @@ class ButtonCustom : AppCompatButton  {
     private fun init() {
 
     }
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val layoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
-        layoutParams.setMargins(marginStart, marginTop, marginEnd, marginBottom)
-        this.layoutParams = layoutParams
-        this.requestLayout()
-    }
+//    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+//        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+//        val layoutParams = this.layoutParams as ViewGroup.MarginLayoutParams
+//        layoutParams.setMargins(marginStart, marginTop, marginEnd, marginBottom)
+//        this.layoutParams = layoutParams
+//        this.requestLayout()
+//    }
 
 }

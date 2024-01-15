@@ -6,16 +6,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.groups.BrainTrainApp.Components.Common.ButtonCustom
 import com.groups.BrainTrainApp.Components.Common.GameSelected
@@ -25,13 +22,11 @@ import com.groups.BrainTrainApp.Datas.easyAnimalImages
 import com.groups.BrainTrainApp.Datas.hardFlowerImages
 import com.groups.BrainTrainApp.Datas.normalFoodImages
 import com.groups.BrainTrainApp.Enum.Level
-import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.borderView
 import com.groups.BrainTrainApp.Utils.drawButton
 import com.groups.BrainTrainApp.Utils.handleEndGame
 import com.groups.BrainTrainApp.Utils.removeBorder
-import java.text.DecimalFormat
 import kotlin.math.roundToInt
 
 
@@ -55,10 +50,10 @@ class FindPairs : AppCompatActivity() {
     var totalPlayTime: Int = 0
     lateinit var progressBar: ProgressBar
     private val countDownTime = 20 //second
-    private val clockTime = (countDownTime*1000).toLong()
+    private val clockTime = (countDownTime * 1000).toLong()
     private val progressTime = (clockTime / 1000).toFloat()
     private lateinit var timer: Timer
-    private val onBackPressedCallBack= object : OnBackPressedCallback(true) {
+    private val onBackPressedCallBack = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             onBackPressedMethod()
         }
@@ -82,14 +77,16 @@ class FindPairs : AppCompatActivity() {
                     hardFlowerImages
                 }
             }
-            supportFragmentManager.beginTransaction().remove(supportFragmentManager.findFragmentById(R.id.level_container)!!).commit()
+            findViewById<TextView>(R.id.level_view).text = "Level: " + level.toString().lowercase()
+            supportFragmentManager.beginTransaction()
+                .remove(supportFragmentManager.findFragmentById(R.id.level_container)!!).commit()
             resetGame()
         })
 
         onBackPressedDispatcher.addCallback(this, onBackPressedCallBack)
 
         btnBack = findViewById(R.id.btnback)
-        btnBack.setOnClickListener{
+        btnBack.setOnClickListener {
             val intent = Intent(this, GameSelected::class.java)
             intent.putExtra("type", GameType.ATTENTION.toString())
             startActivity(intent)
@@ -108,7 +105,7 @@ class FindPairs : AppCompatActivity() {
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
 
-        if(hasFocus) {
+        if (hasFocus) {
             resetGame()
         }
     }
@@ -131,7 +128,7 @@ class FindPairs : AppCompatActivity() {
     private fun setupTimer() {
         var secondLeft = 0
         timer = object : Timer(clockTime, 1000) {}
-        timer.onTick = {millisUntilFinished ->
+        timer.onTick = { millisUntilFinished ->
             val second = (millisUntilFinished / 1000.0f).roundToInt()
             if (second != secondLeft) {
                 secondLeft = second
@@ -196,13 +193,13 @@ class FindPairs : AppCompatActivity() {
         drawButton(this, container, buttonList, count).requestLayout()
     }
 
-    private fun handleClickButton(clickedButton: ButtonCustom){
-        if(clickedButton.isChoose){
+    private fun handleClickButton(clickedButton: ButtonCustom) {
+        if (clickedButton.isChoose) {
             //TODO handle LOSE situation
         }
 
         clickedButton.isChoose = !clickedButton.isChoose
-        if(chosenList.size < 1) {
+        if (chosenList.size < 1) {
             borderView(clickedButton, Color.RED)
 
             drawButton(this, container, buttonList, count).requestLayout()
@@ -263,7 +260,6 @@ class FindPairs : AppCompatActivity() {
     }
 
     private fun handleTimeUp() {
-        //TODO handle lose
         handleEndGame(this, score, totalPlayTime)
     }
 }
