@@ -227,6 +227,7 @@ class FindSum : AppCompatActivity() {
             cb.isEnabled = false
         }
         optionLst.clear()
+        options.clear()
         chosenCheckBoxId.clear()
     }
 
