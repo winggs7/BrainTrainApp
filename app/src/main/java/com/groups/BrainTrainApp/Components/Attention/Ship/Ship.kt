@@ -25,7 +25,6 @@ import com.groups.BrainTrainApp.MainActivity
 import com.groups.BrainTrainApp.R
 import com.groups.BrainTrainApp.Utils.borderView
 import com.groups.BrainTrainApp.Utils.handleEndGame
-import com.groups.BrainTrainApp.Utils.handleProgressBar
 import com.groups.BrainTrainApp.Utils.removeBorder
 import kotlin.math.roundToInt
 import kotlin.random.Random
