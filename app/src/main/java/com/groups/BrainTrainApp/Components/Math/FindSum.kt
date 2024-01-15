@@ -51,17 +51,21 @@ class FindSum : AppCompatActivity() {
 
         viewModel.selectedLevel.observe(this, Observer { level ->
             //TODO handle game's difficulty
+            var levelNum: Int = 1
             when (level) {
                 Level.EASY -> {
                     sumTemp = 10
                 }
                 Level.NORMAL -> {
                     sumTemp = 100
+                    levelNum = 2
                 }
                 else -> {
                     sumTemp = 1000
+                    levelNum = 3
                 }
             }
+            findViewById<TextView>(R.id.level_txt).text = "Cấp độ: " + levelNum.toString()
             supportFragmentManager.beginTransaction().remove(supportFragmentManager.findFragmentById(R.id.level_container)!!).commit()
             init()
         })
